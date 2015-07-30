@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+	<h:form id="formPesquisa" prependId="false">
+		Pesquisar Ferramenta
+		<h:inputText id="pesquisarFerramenta" value="#{ferramentaBean.nomeferramenta}" />
+		<h:commandButton value="pesquisar" action="#{ferramentaBean.pesquisarFerramenta()}" />
+	</h:form>
+
+	<h:messages />
+	<br />
+	<br />
+
+	<h:form id="formResultado">
+		<h:dataTable value="#{ferramentaBean.ferramentas}" var="ferramenta">
+			<h:column>
+				#{ferramenta.nome}				
+			</h:column>
+			<h:column>
+				<h:commandLink value="alterar" action="ferramentaCadastro.jsf">
+					<f:param name="id" value="#{ferramenta.id}" />
+				</h:commandLink>
+
+			</h:column>
+			<h:column>
+				<h:commandLink value="excluir"
+					action="#{ferramentaBean.excluir(ferramenta.id)}"
+					id="linkExcluir" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>

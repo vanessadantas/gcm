@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+	<h:form id="formPesquisa" prependId="false">
+		Pesquisar Responsável
+		<h:inputText id="pesquisarRespensavel"
+			value="#{responsavelBean.nomeResponsavel}" />
+		<h:commandButton value="pesquisar"
+			action="#{responsavelBean.pesquisarResponsavel()}" />
+	</h:form>
+
+	<h:messages />
+	<br />
+	<br />
+
+	<h:form id="formResultado">
+		<h:dataTable value="#{responsavelBean.responsaveis}" var="responsavel">
+			<h:column>
+				#{responsavel.nome}				
+			</h:column>
+			<h:column>
+				<h:commandLink value="alterar" action="responsavelCadastro.jsf">
+					<f:param name="id" value="#{responsavel.id}" />
+				</h:commandLink>
+
+			</h:column>
+			<h:column>
+				<h:commandLink value="excluir"
+					action="#{responsavelBean.excluir(responsavel.id)}"
+					id="linkExcluir" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>
