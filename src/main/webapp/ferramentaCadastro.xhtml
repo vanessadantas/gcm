@@ -6,18 +6,22 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:body>
-	<h:form>
-		<h:messages />
-		<h:panelGrid columns="2">			
-			Nome
-			<h:inputText value="#{ferramentaBean.ferramenta.nome}" label="Nome"/>			
-			Fornecedor
-			<h:inputText value="#{ferramentaBean.ferramenta.fornecedor}" label="fornecedor"/>			
-			
-			<h:inputHidden value="#{ferramentaBean.ferramenta.id}"/>
-
-			<h:commandButton value="salvar" action="#{ferramentaBean.salvar()}"/>
-		</h:panelGrid>
-	</h:form>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:form>
+				<h:messages />
+				<h:panelGrid columns="2" styleClass="table">			
+					Nome
+					<h:inputText value="#{ferramentaBean.ferramenta.nome}" label="Nome"/>			
+					Fornecedor
+					<h:inputText value="#{ferramentaBean.ferramenta.fornecedor}" label="fornecedor"/>			
+					
+					<h:inputHidden value="#{ferramentaBean.ferramenta.id}"/>
+		
+					<h:commandButton value="salvar" action="#{ferramentaBean.salvar()}"/>
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
