@@ -16,8 +16,10 @@ import javax.persistence.TypedQuery;
 @ManagedBean
 @ViewScoped
 public class ResponsavelBean {
-	
+	//usado para cadastro
 	private Responsavel responsavel = new Responsavel();
+	
+	//usado para pesquisa
 	private List<Responsavel> responsaveis;
 	private String nomeResponsavel;
 	

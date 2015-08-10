@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:form>
+				<h:messages />
+				<h:panelGrid columns="2" styleClass="table">			
+					Nome
+					<h:inputText value="#{frameworkBean.framework.nome}" label="Nome"/>			
+					URL
+					<h:inputText value="#{frameworkBean.framework.url}" label="URL"/>
+						
+					<!-- Usa a enumeration Linguagem para preencher a combobox -->		
+					Linguagem
+					<h:selectOneMenu value="#{frameworkBean.framework.linguagem}" label="Linguagem" required="true"> 
+						<f:selectItem noSelectionOption="true" itemLabel="-- Selecione a linguagem --"/>
+						<f:selectItems value="#{frameworkBean.linguagens}" var="linguagem" itemLabel="#{linguagem.nome}" itemValue="#{linguagem}" />
+					</h:selectOneMenu>
+					<h:inputHidden value="#{frameworkBean.framework.id}"/>
+		
+					<h:commandButton value="salvar" action="#{frameworkBean.salvar()}"/>
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
