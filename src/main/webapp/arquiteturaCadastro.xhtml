@@ -31,9 +31,9 @@
 					
 					Frameworks
 					<h:selectManyCheckbox layout="pageDirection" id="checkBoxesFramework"
-						value="#{arquiteturaBean.arquitetura.frameworks}" required="true">
+						value="#{arquiteturaBean.idsFrameworksSelecionados}" required="true">
 						<f:selectItems value="#{arquiteturaBean.frameworks}"
-							var="framework" itemLabel="#{framework.nome}" itemValue="#{framework}"/>
+							var="framework" itemLabel="#{framework.nome}" itemValue="#{framework.id}"/>
 					</h:selectManyCheckbox>
 
 					<h:inputHidden value="#{arquiteturaBean.arquitetura.id}" />
