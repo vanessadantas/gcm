@@ -1,5 +1,6 @@
 package gcm.dominio;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -22,7 +23,7 @@ public class Arquitetura {
 	private String nome;
 	
 	@OneToMany
-	private Set<Framework> frameworks;
+	private Set<Framework> frameworks = new HashSet<>();
 	@Column(length=1024)
 	private String descricao;	
 	

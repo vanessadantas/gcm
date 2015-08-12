@@ -33,7 +33,7 @@
 					<h:selectManyCheckbox layout="pageDirection" id="checkBoxesFramework"
 						value="#{arquiteturaBean.arquitetura.frameworks}" required="true">
 						<f:selectItems value="#{arquiteturaBean.frameworks}"
-							var="framework" itemLabel="#{framework.nome}" />
+							var="framework" itemLabel="#{framework.nome}" itemValue="#{framework}"/>
 					</h:selectManyCheckbox>
 
 					<h:inputHidden value="#{arquiteturaBean.arquitetura.id}" />
