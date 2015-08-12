@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+	<h:form id="formPesquisa" prependId="false">
+		Pesquisar Arquitetura
+		<h:inputText id="pesquisarArquitetura"
+			value="#{arquiteturaBean.nomeArquitetura}" />
+		<h:commandButton value="pesquisar"
+			action="#{arquiteturaBean.pesquisarArquitetura()}" />
+	</h:form>
+
+	<h:messages />
+	<br />
+	<br />
+
+	<h:form id="formResultado">
+		<h:dataTable value="#{arquiteturaBean.arquiteturas}" var="arquitetura">
+			<h:column>
+				#{arquitetura.nome}				
+			</h:column>
+			<h:column>
+				#{arquitetura.descricao}				
+			</h:column>
+			<h:column>
+				<h:link value="alterar" outcome="arquiteturaCadastro.jsf">
+					<f:param name="id" value="#{arquitetura.id}" />
+				</h:link>
+
+			</h:column>
+			<h:column>
+				<h:commandLink value="excluir"
+					action="#{arquiteturaBean.excluir(arquitetura.id)}"
+					id="linkExcluir" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>
