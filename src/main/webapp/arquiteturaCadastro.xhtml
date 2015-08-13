@@ -8,38 +8,58 @@
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-			<h:form>
+			<h:form styleClass="form-horizontal">
 				<h:messages />
-				<h:panelGrid columns="2" styleClass="table">			
-					Nome
-					<h:inputText value="#{arquiteturaBean.arquitetura.nome}"
-						label="Nome" />		
-					Descrição
-					<h:inputTextarea value="#{arquiteturaBean.arquitetura.descricao}" />
 
-					<!-- Usa a enumeration Linguagem para preencher a combobox -->		
-					Linguagem
-					<h:selectOneMenu value="#{arquiteturaBean.linguagem}"
-						label="Linguagem" required="true">
-						<f:selectItem noSelectionOption="true"
-							itemLabel="-- Selecione a linguagem --" />
-						<f:selectItems value="#{arquiteturaBean.linguagens}"
-							var="linguagem" itemLabel="#{linguagem.nome}"
-							itemValue="#{linguagem}" />
-						<f:ajax render="checkBoxesFramework"/>
-					</h:selectOneMenu>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Nome</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{arquiteturaBean.arquitetura.nome}"
+							label="Nome" styleClass="form-control" />
+					</div>
+				</div>
+						
+				<div class="form-group">
+					<label class="control-label col-xs-2">Descrição</label>
+					<div class="col-xs-6">			
+						<h:inputTextarea value="#{arquiteturaBean.arquitetura.descricao}" styleClass="form-control"/>
+					</div>
+				</div>
+				
+				<!-- Usa a enumeration Linguagem para preencher a combobox -->		
+				<div class="form-group">
+					<label class="control-label col-xs-2">Linguagem</label>
+					<div class="col-xs-6">			
+						<h:selectOneMenu value="#{arquiteturaBean.linguagem}"
+							label="Linguagem" required="true" styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione a linguagem --" />
+							<f:selectItems value="#{arquiteturaBean.linguagens}"
+								var="linguagem" itemLabel="#{linguagem.nome}"
+								itemValue="#{linguagem}" />
+							<f:ajax render="checkBoxesFramework"/>
+						</h:selectOneMenu>
+					</div>
+				</div>
 					
-					Frameworks
-					<h:selectManyCheckbox layout="pageDirection" id="checkBoxesFramework"
-						value="#{arquiteturaBean.idsFrameworksSelecionados}" required="true">
-						<f:selectItems value="#{arquiteturaBean.frameworks}"
-							var="framework" itemLabel="#{framework.nome}" itemValue="#{framework.id}"/>
-					</h:selectManyCheckbox>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Frameworks</label>
+					<div class="col-xs-6">			
+						<h:selectManyCheckbox layout="pageDirection" id="checkBoxesFramework" 
+							value="#{arquiteturaBean.idsFrameworksSelecionados}" required="true">
+							<f:selectItems value="#{arquiteturaBean.frameworks}"
+								var="framework" itemLabel="#{framework.nome}" itemValue="#{framework.id}"/>
+						</h:selectManyCheckbox>
+					</div>
+				</div>
 
-					<h:inputHidden value="#{arquiteturaBean.arquitetura.id}" />
-					<h:commandButton value="salvar"
-						action="#{arquiteturaBean.salvar()}" />
-				</h:panelGrid>
+				<h:inputHidden value="#{arquiteturaBean.arquitetura.id}" />
+				<div class="form-group">
+        			<div class="col-xs-offset-2 col-xs-10">
+						<h:commandButton value="salvar" styleClass="btn btn-primary"
+							action="#{arquiteturaBean.salvar()}" />
+					</div>
+				</div>
 			</h:form>
 		</ui:define>
 	</ui:composition>
