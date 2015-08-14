@@ -37,8 +37,6 @@ public class Arquitetura {
 		int result = 1;
 		result = prime * result
 				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result
-				+ ((frameworks == null) ? 0 : frameworks.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
@@ -59,11 +57,6 @@ public class Arquitetura {
 			if (other.descricao != null)
 				return false;
 		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (frameworks == null) {
-			if (other.frameworks != null)
-				return false;
-		} else if (!frameworks.equals(other.frameworks))
 			return false;
 		if (id == null) {
 			if (other.id != null)

@@ -18,7 +18,9 @@ import javax.persistence.TypedQuery;
 @ManagedBean
 @ViewScoped
 public class FrameworkBean {
-	//Usado para cadastro
+	//Cria uma instancia de Framework que será usado para apresentar os dados do formulario.
+	//No caso de um cadastro de novo framework, essa instancia será carregada a partir de 
+	//um formulário vazio
 	private Framework framework = new Framework();
 	
 	//usado para pesquisa
@@ -26,6 +28,8 @@ public class FrameworkBean {
 	private String nomeFramework;
 
 	public FrameworkBean() {
+		//Verifica se foi passada um parametro via querystring com o nome de "id"
+		//Em caso positivo, trata-se de uma alteração do framework
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parametroId = parametros.get("id");
 		if (parametroId != null) {
