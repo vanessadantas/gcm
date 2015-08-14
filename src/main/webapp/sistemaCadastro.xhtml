@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:form styleClass="form-horizontal">
+				<h:messages />
+
+				<div class="form-group">
+					<label class="control-label col-xs-2">Nome</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{sistemaBean.sistema.nome}"
+							label="Nome" styleClass="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Sigla</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{sistemaBean.sistema.sigla}"
+							label="Nome" styleClass="form-control" />
+					</div>
+				</div>
+				<!-- Usa a enumeration Linguagem para preencher a combobox -->		
+				<div class="form-group">
+					<label class="control-label col-xs-2">Linguagem</label>
+					<div class="col-xs-6">			
+						<h:selectOneMenu value="#{sistemaBean.sistema.linguagem}"
+							label="Linguagem" required="true" styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione a linguagem --" />
+							<f:selectItems value="#{sistemaBean.linguagens}"
+								var="linguagem" itemLabel="#{linguagem.nome}"
+								itemValue="#{linguagem}" />
+							<f:ajax listener="#{sistemaBean.pesquisarArquitetura()}" render="comboArquitetura"/>
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Arquitetura</label>
+					<div class="col-xs-6">			
+						<h:selectOneMenu value="#{sistemaBean.sistema.arquitetura}" id="comboArquitetura"
+							label="Arquitetura" required="true" styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione a arquitetura --" />
+							<f:selectItems value="#{sistemaBean.arquiteturas}"
+								var="arquitetura" itemLabel="#{arquitetura.nome}" 
+								itemValue="#{arquitetura}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<h:inputHidden value="#{sistemaBean.sistema.id}" />
+				<div class="form-group">
+        			<div class="col-xs-offset-2 col-xs-10">
+						<h:commandButton value="salvar" styleClass="btn btn-primary"
+							action="#{sistemaBean.salvar()}" />
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

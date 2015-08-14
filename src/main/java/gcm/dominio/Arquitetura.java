@@ -7,8 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 @Entity
 @NamedQuery(name=Arquitetura.PESQUISAR_POR_NOME, 
@@ -22,7 +22,7 @@ public class Arquitetura {
 	@Column(length=100, nullable=false)
 	private String nome;
 	
-	@OneToMany
+	@ManyToMany
 	private Set<Framework> frameworks = new HashSet<>();
 	@Column(length=1024)
 	private String descricao;	

@@ -2,20 +2,46 @@ package gcm.dominio;
 
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 /**
- * Representa um sistema ou um projeto de sistema dentro da organização.
- * É o principal artefato gerenciado pela equipe de GCM.  
+ * Representa um sistema ou um projeto de sistema dentro da organizaÃ§Ã£o.
+ * Ã‰ o principal artefato gerenciado pela equipe de GCM.  
  * @author vanessa
  *
  */
+@Entity
+@NamedQuery(name=Sistema.PESQUISAR_POR_NOME, 
+			query="select s from Sistema s where upper(s.nome) like :nome order by s.nome")
 public class Sistema {
 	
+	public static final String PESQUISAR_POR_NOME = "sistema.pesquisarPorNome";
+	
+	@Id
+	@GeneratedValue
 	private Long id;
+	@Column
 	private String nome;
+	@Column
 	private String sigla;
+	@Enumerated(EnumType.STRING)
+	private Linguagem linguagem;
+	@OneToMany
 	private Set<Responsavel> responsaveis;
+	@OneToOne
 	private Arquitetura arquitetura;
+	@Transient
 	private Set<Versao> versoes;
+	@Transient
 	private Set<Sistema> dependencias;
 	
 	@Override
@@ -103,6 +129,12 @@ public class Sistema {
 		this.dependencias = dependencias;
 	}
 
-	
+	public Linguagem getLinguagem() {
+		return linguagem;
+	}
+
+	public void setLinguagem(Linguagem linguagem) {
+		this.linguagem = linguagem;
+	}
 	
 }

@@ -22,13 +22,13 @@ import javax.persistence.TypedQuery;
 public class ArquiteturaBean {
 	//Usado para cadastro
 	private Arquitetura arquitetura = new Arquitetura();
-	private String linguagem, ultimaLinguagemPesquisada;
 	private List<Framework> frameworks = new ArrayList<>();
 	private List<String> idsFrameworksSelecionados = new ArrayList<>();
 	
 	//usado para pesquisa
 	private List<Arquitetura> arquiteturas;
 	private String nomeArquitetura;
+	private String linguagem, ultimaLinguagemPesquisada;
 
 	public ArquiteturaBean() {
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
