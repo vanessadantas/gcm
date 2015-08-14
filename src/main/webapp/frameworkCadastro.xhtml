@@ -9,7 +9,8 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form>
-				<h:messages />
+				<h:messages styleClass="alert alert-success col-xs-10"/>
+				
 				<h:panelGrid columns="2" styleClass="table">			
 					Nome
 					<h:inputText value="#{frameworkBean.framework.nome}" label="Nome"/>			

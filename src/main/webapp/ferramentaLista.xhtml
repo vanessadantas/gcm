@@ -6,33 +6,52 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head></h:head>
 <h:body>
-	<h:form id="formPesquisa" prependId="false">
-		Pesquisar Ferramenta
-		<h:inputText id="pesquisarFerramenta" value="#{ferramentaBean.nomeferramenta}" />
-		<h:commandButton value="pesquisar" action="#{ferramentaBean.pesquisarFerramenta()}" />
-	</h:form>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
 
-	<h:messages />
-	<br />
-	<br />
+			<h:messages styleClass="alert alert-success col-xs-10"/>
 
-	<h:form id="formResultado">
-		<h:dataTable value="#{ferramentaBean.ferramentas}" var="ferramenta">
-			<h:column>
-				#{ferramenta.nome}				
-			</h:column>
-			<h:column>
-				<h:commandLink value="alterar" action="ferramentaCadastro.jsf">
-					<f:param name="id" value="#{ferramenta.id}" />
-				</h:commandLink>
-
-			</h:column>
-			<h:column>
-				<h:commandLink value="excluir"
-					action="#{ferramentaBean.excluir(ferramenta.id)}"
-					id="linkExcluir" />
-			</h:column>
-		</h:dataTable>
-	</h:form>
+			<h:form id="formPesquisa" prependId="false">
+				<div class="container form-group cols-xs-10">
+					<label class="control-label col-xs-3">Pesquisar Ferramenta</label>
+					<div class="col-xs-4">							
+						<h:inputText id="pesquisarFerramenta" value="#{ferramentaBean.nomeferramenta}" styleClass="form-control"/>
+					</div>
+				
+					<div class="col-xs-4">
+						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
+							value="pesquisar" action="#{ferramentaBean.pesquisarFerramenta()}" />
+					
+						&nbsp;
+						
+						<h:button outcome="ferramentaCadastro.jsf" styleClass="btn btn-default btn-sm" 
+							aria-label="Left Align" value="nova ferramenta">
+						</h:button>
+					</div>
+				</div>
+			</h:form>
+		
+		
+			<h:form id="formResultado" class="col-xs-9">
+				<h:dataTable value="#{ferramentaBean.ferramentas}" var="ferramenta" styleClass="table">
+					<h:column>
+						#{ferramenta.nome}				
+					</h:column>
+					<h:column>
+						<h:commandLink action="ferramentaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+							<f:param name="id" value="#{ferramenta.id}" />
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+						</h:commandLink>
+		
+						<h:commandLink class="btn btn-default" aria-label="Left Align"
+							action="#{ferramentaBean.excluir(ferramenta.id)}"
+							id="linkExcluir">
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

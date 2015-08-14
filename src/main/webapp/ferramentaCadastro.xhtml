@@ -8,18 +8,32 @@
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-			<h:form>
-				<h:messages />
-				<h:panelGrid columns="2" styleClass="table">			
-					Nome
-					<h:inputText value="#{ferramentaBean.ferramenta.nome}" label="Nome"/>			
-					Fornecedor
-					<h:inputText value="#{ferramentaBean.ferramenta.fornecedor}" label="fornecedor"/>			
-					
-					<h:inputHidden value="#{ferramentaBean.ferramenta.id}"/>
+			<h:form  styleClass="form-horizontal">
+				<h:messages styleClass="alert alert-success col-xs-10"/>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Nome</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{ferramentaBean.ferramenta.nome}"
+							label="Nome" styleClass="form-control" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-xs-2">Fornecedor</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{ferramentaBean.ferramenta.fornecedor}"
+							label="Fornecedor" styleClass="form-control" />
+					</div>
+				</div>
+				<h:inputHidden value="#{ferramentaBean.ferramenta.id}"/>
 		
-					<h:commandButton value="salvar" action="#{ferramentaBean.salvar()}"/>
-				</h:panelGrid>
+				<div class="form-group">
+        			<div class="col-xs-offset-2 col-xs-10">
+						<h:commandButton value="salvar" styleClass="btn btn-primary"
+							action="#{ferramentaBean.salvar()}" />
+					</div>
+				</div>
 			</h:form>
 		</ui:define>
 	</ui:composition>

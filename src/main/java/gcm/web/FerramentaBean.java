@@ -46,7 +46,7 @@ public class FerramentaBean {
 			query.setParameter("nome", "%" + nomeferramenta.toUpperCase() + "%");
 			ferramentas = query.getResultList();
 			if (ferramentas.isEmpty()) {
-				FacesMessage msg = new FacesMessage("Não foi encontrada a ferramenta");
+				FacesMessage msg = new FacesMessage("Não foi encontrada nenhuma ferramenta");
 				FacesContext.getCurrentInstance().addMessage(null, msg);			
 			}
 			return "sucesso";
