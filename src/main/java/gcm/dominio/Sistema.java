@@ -4,10 +4,9 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -33,32 +32,42 @@ public class Sistema {
 	private String nome;
 	@Column
 	private String sigla;
-	@Enumerated(EnumType.STRING)
-	private Linguagem linguagem;
+	@Column
+	private String url;	
 	@OneToMany
 	private Set<Responsavel> responsaveis;
 	@OneToOne
-	private Arquitetura arquitetura;
-	@Transient
-	private Set<Versao> versoes;
+	private Arquitetura arquitetura;	
 	@Transient
 	private Set<Sistema> dependencias;
+	@Column
+	private String observacao;	
+	@OneToMany
+	@JoinColumn(name="sistema_id")
+	private Set<Deploy> deploys;
 	
 	@Override
 	public String toString() {
 		return this.sigla + " - " + this.nome;
 	}
 			
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((arquitetura == null) ? 0 : arquitetura.hashCode());
+		result = prime * result + ((dependencias == null) ? 0 : dependencias.hashCode());
+		result = prime * result + ((deploys == null) ? 0 : deploys.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((observacao == null) ? 0 : observacao.hashCode());
+		result = prime * result + ((responsaveis == null) ? 0 : responsaveis.hashCode());
 		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,6 +77,21 @@ public class Sistema {
 		if (getClass() != obj.getClass())
 			return false;
 		Sistema other = (Sistema) obj;
+		if (arquitetura == null) {
+			if (other.arquitetura != null)
+				return false;
+		} else if (!arquitetura.equals(other.arquitetura))
+			return false;
+		if (dependencias == null) {
+			if (other.dependencias != null)
+				return false;
+		} else if (!dependencias.equals(other.dependencias))
+			return false;
+		if (deploys == null) {
+			if (other.deploys != null)
+				return false;
+		} else if (!deploys.equals(other.deploys))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -78,14 +102,28 @@ public class Sistema {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
+		if (observacao == null) {
+			if (other.observacao != null)
+				return false;
+		} else if (!observacao.equals(other.observacao))
+			return false;
+		if (responsaveis == null) {
+			if (other.responsaveis != null)
+				return false;
+		} else if (!responsaveis.equals(other.responsaveis))
+			return false;
 		if (sigla == null) {
 			if (other.sigla != null)
 				return false;
 		} else if (!sigla.equals(other.sigla))
 			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
 		return true;
 	}
-
 	public Long getId() {
 		return id;
 	}
@@ -116,12 +154,7 @@ public class Sistema {
 	public void setArquitetura(Arquitetura arquitetura) {
 		this.arquitetura = arquitetura;
 	}
-	public Set<Versao> getVersoes() {
-		return versoes;
-	}
-	public void setVersoes(Set<Versao> versoes) {
-		this.versoes = versoes;
-	}
+	
 	public Set<Sistema> getDependencias() {
 		return dependencias;
 	}
@@ -129,12 +162,27 @@ public class Sistema {
 		this.dependencias = dependencias;
 	}
 
-	public Linguagem getLinguagem() {
-		return linguagem;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setLinguagem(Linguagem linguagem) {
-		this.linguagem = linguagem;
+	public void setUrl(String url) {
+		this.url = url;
 	}
-	
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public Set<Deploy> getDeploys() {
+		return deploys;
+	}
+
+	public void setDeploys(Set<Deploy> deploys) {
+		this.deploys = deploys;
+	}
 }
