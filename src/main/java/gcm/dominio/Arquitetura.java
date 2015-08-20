@@ -8,13 +8,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name=Arquitetura.PESQUISAR_POR_NOME, 
-query="select a from Arquitetura a where upper(a.nome) like :nome order by a.nome")
+@NamedQueries({
+	@NamedQuery(name=Arquitetura.PESQUISAR_POR_NOME, 
+				query="select a from Arquitetura a where upper(a.nome) like :nome order by a.nome"),
+	@NamedQuery(name=Arquitetura.PESQUISAR_POR_LINGUAGEM,
+				query="select distinct a from Arquitetura a join a.frameworks f where f.linguagem = :linguagem")
+})
 public class Arquitetura {
 	public static final String PESQUISAR_POR_NOME = "arquitetura.pesquisarPorNome";
+	public static final String PESQUISAR_POR_LINGUAGEM = "arquitetura.pesquisarPorLinguagem";
 	
 	@Id
 	@GeneratedValue

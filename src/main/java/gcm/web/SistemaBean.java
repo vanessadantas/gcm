@@ -23,15 +23,19 @@ public class SistemaBean {
 	private List<Sistema> sistemas;
 	private String nomeArquitetura;
 	private String nomeSistema = "";
+	private String linguagemSelecionada = "";
 
 	private Sistema sistema = new Sistema();
 	public Arquitetura arquitetura = new Arquitetura();
 
 	// preencher os valos da combobox de arquitetura
 	public void pesquisarArquitetura() {
-		EntityManager em = JPAUtil.getEntityManager();
-		TypedQuery<Arquitetura> query = em.createQuery("select a from Arquitetura a", Arquitetura.class);
-		arquiteturas = query.getResultList();
+		if (linguagemSelecionada != "") {
+			EntityManager em = JPAUtil.getEntityManager();
+			TypedQuery<Arquitetura> query = em.createNamedQuery(Arquitetura.PESQUISAR_POR_LINGUAGEM, Arquitetura.class);
+			query.setParameter("linguagem", Linguagem.valueOf(linguagemSelecionada));
+			arquiteturas = query.getResultList();
+		}
 	}
 
 	// Usado para cadastro
@@ -121,5 +125,14 @@ public class SistemaBean {
 	public void setNomeSistema(String nomeSistema) {
 		this.nomeSistema = nomeSistema;
 	}
+
+	public String getLinguagemSelecionada() {
+		return linguagemSelecionada;
+	}
+
+	public void setLinguagemSelecionada(String linguagemSelecionada) {
+		this.linguagemSelecionada = linguagemSelecionada;
+	}
+	
 	
 }
