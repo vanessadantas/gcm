@@ -52,11 +52,12 @@ public class FerramentaBean {
 			return "sucesso";
 		}
 		
-		public void excluir(Long idFerramenta) {
+		public String excluir(Long idFerramenta) {
 			EntityManager em = JPAUtil.getEntityManager();
 			Ferramenta ferramenta = em.find(Ferramenta.class, idFerramenta);
 			em.remove(ferramenta);
 			pesquisarFerramenta();
+			return "sucesso";
 		}
 
 		public Ferramenta getFerramenta() {

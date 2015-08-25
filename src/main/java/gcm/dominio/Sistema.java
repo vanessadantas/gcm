@@ -13,8 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 /**
- * Representa um sistema ou um projeto de sistema dentro da organizaÃ§Ã£o.
- * Ã‰ o principal artefato gerenciado pela equipe de GCM.  
+ * Representa um sistema ou um projeto de sistema dentro da organização.
+ * É o principal artefato gerenciado pela equipe de GCM.  
  * @author vanessa
  *
  */
@@ -51,8 +51,6 @@ public class Sistema {
 		return this.sigla + " - " + this.nome;
 	}
 			
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

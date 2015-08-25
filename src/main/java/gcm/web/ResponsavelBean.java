@@ -1,8 +1,11 @@
 package gcm.web;
 
+import gcm.aplicacao.CrudService;
 import gcm.dominio.Responsavel;
-import gcm.infra.JPAUtil;
+import gcm.infra.CrudServiceImpl;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +13,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 @ManagedBean
 @ViewScoped
-public class ResponsavelBean {
+public class ResponsavelBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	private CrudService<Responsavel> crudService = new CrudServiceImpl<Responsavel>(Responsavel.class);
+	
 	//usado para cadastro
 	private Responsavel responsavel = new Responsavel();
 	
@@ -27,14 +32,12 @@ public class ResponsavelBean {
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parametroId = parametros.get("id");
 		if (parametroId != null) {
-			EntityManager em = JPAUtil.getEntityManager();
-			responsavel = em.find(Responsavel.class, Long.valueOf(parametroId));
+			responsavel = crudService.buscarPorId(Long.valueOf(parametroId));
 		}
 	}
 	
 	public String salvar() {
-		EntityManager em = JPAUtil.getEntityManager();
-		em.merge(responsavel);
+		crudService.salvar(responsavel);
 				
 		FacesMessage msg = new FacesMessage("Responsável cadastrado com sucesso");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -43,10 +46,10 @@ public class ResponsavelBean {
 	}
 	
 	public String pesquisarResponsavel() {
-		EntityManager em = JPAUtil.getEntityManager();
-		TypedQuery<Responsavel> query = em.createNamedQuery(Responsavel.PESQUISAR_POR_NOME, Responsavel.class);
-		query.setParameter("nome", "%" + nomeResponsavel.toUpperCase() + "%");
-		responsaveis = query.getResultList();
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("nome", "%" + nomeResponsavel.toUpperCase() + "%");
+		responsaveis = crudService.pesquisarPorNamedQuery(Responsavel.PESQUISAR_POR_NOME, parametros);
+		
 		if (responsaveis.isEmpty()) {
 			FacesMessage msg = new FacesMessage("Não foi encontrado responsável");
 			FacesContext.getCurrentInstance().addMessage(null, msg);			
@@ -55,9 +58,7 @@ public class ResponsavelBean {
 	}
 	
 	public void excluir(Long idResponsavel) {
-		EntityManager em = JPAUtil.getEntityManager();
-		Responsavel responsavel = em.find(Responsavel.class, idResponsavel);
-		em.remove(responsavel);
+		crudService.excluir(idResponsavel);
 		pesquisarResponsavel();
 	}
 	

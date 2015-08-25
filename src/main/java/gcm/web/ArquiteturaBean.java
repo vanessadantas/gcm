@@ -83,11 +83,12 @@ public class ArquiteturaBean {
 		}
 	}
 	
-	public void excluir(Long idArquitetura) {
+	public String excluir(Long idArquitetura) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Arquitetura arquitetura = em.find(Arquitetura.class, idArquitetura);
 		em.remove(arquitetura);
 		pesquisarArquitetura();
+		return "sucesso";
 	}
 	
 	public List<Framework> getFrameworks() {
