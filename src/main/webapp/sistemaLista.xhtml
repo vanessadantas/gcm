@@ -9,23 +9,24 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 
-			<h:messages styleClass="alert alert-success col-xs-10"/>
+			<h:messages styleClass="alert alert-success"/>
 			<h:form id="formPesquisa" prependId="false">
-				<div class="container form-group cols-xs-10">
+				<div class="container row form-group">
 					<label class="control-label col-xs-3">Pesquisar Sistema</label>
-					<div class="col-xs-4">			
+					
+					<div class="input-group col-xs-9">
 						<h:inputText id="pesquisarSistema" styleClass="form-control" 
 							value="#{sistemaBean.sistema.nome}" />
-					</div>
-
-					<div class="col-xs-4">
-						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
-							action="#{sistemaBean.pesquisarSistema()}" value="pesquisar">
-						</h:commandButton>
-		
-						<h:button outcome="sistemaCadastro.jsf" styleClass="btn btn-default btn-sm" 
-							aria-label="Left Align" value="novo sistema">
-						</h:button>
+	
+						<span class="input-group-btn">
+							<h:commandButton styleClass="btn btn-default" aria-label="Left Align"
+								action="#{sistemaBean.pesquisarSistema()}" value="pesquisar">
+							</h:commandButton>
+			
+							<h:button outcome="sistemaCadastro.jsf" styleClass="btn btn-default" 
+								aria-label="Left Align" value="novo sistema">
+							</h:button>
+						</span>
 					</div>
 				</div>					
 			</h:form>
