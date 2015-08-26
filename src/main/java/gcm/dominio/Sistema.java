@@ -1,5 +1,6 @@
 package gcm.dominio;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -34,8 +36,8 @@ public class Sistema {
 	private String sigla;
 	@Column
 	private String url;	
-	@OneToMany
-	private Set<Responsavel> responsaveis;
+	@ManyToMany
+	private Set<Responsavel> responsaveis = new HashSet<>();
 	@OneToOne
 	private Arquitetura arquitetura;	
 	@Transient

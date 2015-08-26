@@ -13,53 +13,112 @@
 
 				<div class="form-group">
 					<label class="control-label col-xs-2">Nome</label>
-					<div class="col-xs-6">			
-						<h:inputText value="#{sistemaBean.sistema.nome}"
-							label="Nome" styleClass="form-control" />
+					<div class="col-xs-6">
+						<h:inputText value="#{sistemaBean.sistema.nome}" label="Nome"
+							styleClass="form-control" />
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-xs-2">Sigla</label>
-					<div class="col-xs-6">			
-						<h:inputText value="#{sistemaBean.sistema.sigla}"
-							label="Nome" styleClass="form-control" />
+					<div class="col-xs-6">
+						<h:inputText value="#{sistemaBean.sistema.sigla}" label="Sigla"
+							styleClass="form-control" />
 					</div>
 				</div>
-				<!-- Usa a enumeration Linguagem para preencher a combobox -->		
+				<div class="form-group">
+					<label class="control-label col-xs-2">Url</label>
+					<div class="col-xs-6">
+						<h:inputText value="#{sistemaBean.sistema.url}" label="Url"
+							styleClass="form-control" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Observação</label>
+					<div class="col-xs-6">			
+						<h:inputTextarea value="#{sistemaBean.sistema.observacao}" styleClass="form-control"/>
+					</div>
+				</div>
+				<!-- Usa a enumeration Linguagem para preencher a combobox -->
 				<div class="form-group">
 					<label class="control-label col-xs-2">Linguagem</label>
-					<div class="col-xs-6">			
+					<div class="col-xs-6">
 						<h:selectOneMenu value="#{sistemaBean.linguagemSelecionada}"
 							label="Linguagem" required="true" styleClass="form-control">
 							<f:selectItem noSelectionOption="true"
 								itemLabel="-- Selecione a linguagem --" />
-							<f:selectItems value="#{sistemaBean.linguagens}"
-								var="linguagem" itemLabel="#{linguagem.nome}"
-								itemValue="#{linguagem}" />
-							<f:ajax listener="#{sistemaBean.pesquisarArquitetura()}" render="comboArquitetura"/>
+							<f:selectItems value="#{sistemaBean.linguagens}" var="linguagem"
+								itemLabel="#{linguagem.nome}" itemValue="#{linguagem}" />
+							<f:ajax listener="#{sistemaBean.pesquisarArquitetura()}"
+								render="comboArquitetura" />
 						</h:selectOneMenu>
 					</div>
-				</div> 
+				</div>
 				<div class="form-group">
 					<label class="control-label col-xs-2">Arquitetura</label>
-					<div class="col-xs-6">			
-						<h:selectOneMenu value="#{sistemaBean.sistema.arquitetura}" id="comboArquitetura"
-							label="Arquitetura" required="true" styleClass="form-control">
+					<div class="col-xs-6">
+						<h:selectOneMenu value="#{sistemaBean.sistema.arquitetura}"
+							id="comboArquitetura" label="Arquitetura" required="true"
+							styleClass="form-control">
 							<f:selectItem noSelectionOption="true"
 								itemLabel="-- Selecione a arquitetura --" />
 							<f:selectItems value="#{sistemaBean.arquiteturas}"
-								var="arquitetura" itemLabel="#{arquitetura.nome}" 
+								var="arquitetura" itemLabel="#{arquitetura.nome}"
 								itemValue="#{arquitetura}" />
 						</h:selectOneMenu>
 					</div>
 				</div>
-				<h:inputHidden value="#{sistemaBean.sistema.id}" />
 				<div class="form-group">
-        			<div class="col-xs-offset-2 col-xs-10">
+					<label class="control-label col-xs-2">Responsável</label>
+					<div class="col-xs-5">
+						<h:selectOneMenu value="#{sistemaBean.responsavelSelecionado}"
+							id="comboListaResponsavel" label="Responsavel"
+							styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione o Responsável --" />
+							<f:selectItems value="#{sistemaBean.responsaveis}"
+								var="responsavel" itemLabel="#{responsavel.nome}"
+								itemValue="#{responsavel}" />
+							<f:ajax />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-xs-1" style="text-align:right">
+						<h:commandLink class="btn btn-default" aria-label="Left Align"
+							action="#{sistemaBean.adicionarResponsavel()}" 
+							id="linkAdicionar">
+							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-6">
+						<span>Responsáveis selecionados</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-6">
+						<h:dataTable value="#{sistemaBean.responsaveisSelecionados}"
+							var="responsavel" width="100%">
+							<h:column>
+								#{responsavel.nome}				
+							</h:column>
+							<h:column>
+								<h:commandLink class="btn btn-default" aria-label="Right Align"
+									action="#{sistemaBean.removerResponsavel(responsavel)}"
+									id="linkExcluir" style="text-align:right">
+									<span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+								</h:commandLink>
+							</h:column>
+						</h:dataTable>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-6">
+						<h:inputHidden value="#{sistemaBean.sistema.id}" />
 						<h:commandButton value="salvar" styleClass="btn btn-primary"
 							action="#{sistemaBean.salvar()}" />
 					</div>
 				</div>
+				
 			</h:form>
 		</ui:define>
 	</ui:composition>

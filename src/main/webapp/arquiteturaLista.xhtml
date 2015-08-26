@@ -12,26 +12,24 @@
 			<h:messages styleClass="alert alert-success col-xs-10"/>
 
 			<h:form id="formPesquisa" prependId="false">
-				<div class="container form-group cols-xs-10">
-					<label class="control-label col-xs-3">Pesquisar Arquitetura</label>
-					<div class="col-xs-4">			
-						<h:inputText id="pesquisarArquitetura" styleClass="form-control" 
-							value="#{arquiteturaBean.nomeArquitetura}" />
 
-					</div>
-					
-					<div class="col-xs-4">
-						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
-							action="#{arquiteturaBean.pesquisarArquitetura()}" value="pesquisar">
-							<!-- span class="glyphicon glyphicon-filter" aria-hidden="true" /-->
-						</h:commandButton>
-		
-						<h:button outcome="arquiteturaCadastro.jsf" styleClass="btn btn-default btn-sm" 
-							aria-label="Left Align" value="nova arquitetura">
-							<!-- span class="glyphicon glyphicon-plus-sign" aria-hidden="true" /-->
-						</h:button>
+				<div class="row container form-group cols-xs-10">
+					<label class="control-label col-xs-3">Pesquisar Arquitetura</label>
+					<div class="input-group col-xs-7">
+						<h:inputText id="pesquisarArquitetura" styleClass="form-control"
+							value="#{arquiteturaBean.nomeArquitetura}" />
+						<span class="input-group-btn"> <h:commandButton
+								styleClass="btn btn-default" aria-label="Left Align"
+								action="#{arquiteturaBean.pesquisarArquitetura()}"
+								value="pesquisar">
+							</h:commandButton> <h:button outcome="arquiteturaCadastro.jsf"
+								styleClass="btn btn-default" aria-label="Left Align"
+								value="nova arquitetura">
+							</h:button>
+						</span>
 					</div>
 				</div>
+
 			</h:form>
 		
 			<h:form id="formResultado" class="col-xs-9">

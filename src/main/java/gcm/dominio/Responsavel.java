@@ -4,14 +4,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name=Responsavel.PESQUISAR_POR_NOME, 
-			query="select r from Responsavel r where upper(r.nome) like :nome order by r.nome")
+@NamedQueries({
+	@NamedQuery(name=Responsavel.PESQUISAR_POR_NOME, 
+			query="select r from Responsavel r where upper(r.nome) like :nome order by r.nome"),
+	@NamedQuery(name=Responsavel.LISTAR_TODOS, 
+	query="select r from Responsavel r order by r.nome")
+})
 public class Responsavel {	
 	
 	public static final String PESQUISAR_POR_NOME = "responsavel.pesquisarPorNome";
+	public static final String LISTAR_TODOS = "responsavel.listarTodos";
 	
 	@Id
 	@GeneratedValue
