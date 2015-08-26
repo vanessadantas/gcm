@@ -9,30 +9,30 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 
-			<h:messages styleClass="alert alert-success col-xs-10"/>
+			<h:messages styleClass="alert alert-success"/>
 
 			<h:form id="formPesquisa" prependId="false">
-
-				<div class="row container form-group cols-xs-10">
+				<div class="container row form-group">
 					<label class="control-label col-xs-3">Pesquisar Arquitetura</label>
-					<div class="input-group col-xs-7">
+					
+					<div class="input-group col-xs-9">
 						<h:inputText id="pesquisarArquitetura" styleClass="form-control"
 							value="#{arquiteturaBean.nomeArquitetura}" />
-						<span class="input-group-btn"> <h:commandButton
+						<span class="input-group-btn"> 
+							<h:commandButton
 								styleClass="btn btn-default" aria-label="Left Align"
 								action="#{arquiteturaBean.pesquisarArquitetura()}"
 								value="pesquisar">
-							</h:commandButton> <h:button outcome="arquiteturaCadastro.jsf"
-								styleClass="btn btn-default" aria-label="Left Align"
-								value="nova arquitetura">
+							</h:commandButton> 
+							<h:button outcome="arquiteturaCadastro.jsf" styleClass="btn btn-default" 
+								aria-label="Left Align" value="nova arquitetura">
 							</h:button>
 						</span>
 					</div>
 				</div>
-
 			</h:form>
 		
-			<h:form id="formResultado" class="col-xs-9">
+			<h:form id="formResultado">
 				<h:dataTable value="#{arquiteturaBean.arquiteturas}" var="arquitetura" styleClass="table">
 					<h:column>
 						#{arquitetura.nome}				
@@ -45,7 +45,6 @@
 							<f:param name="id" value="#{arquitetura.id}" />
 							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 						</h:link>
-
 						<h:commandLink class="btn btn-default" aria-label="Left Align"
 							action="#{arquiteturaBean.excluir(arquitetura.id)}"
 							id="linkExcluir" >
