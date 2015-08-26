@@ -20,11 +20,7 @@ public class ResponsavelBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private CrudService<Responsavel> crudService = new CrudServiceImpl<Responsavel>(Responsavel.class);
-	
-	//usado para cadastro
 	private Responsavel responsavel = new Responsavel();
-	
-	//usado para pesquisa
 	private List<Responsavel> responsaveis;
 	private String nomeResponsavel;
 	

@@ -1,10 +1,14 @@
 package gcm.web;
 
+import gcm.aplicacao.CrudService;
+import gcm.dominio.Ferramenta;
 import gcm.dominio.Framework;
 import gcm.dominio.Linguagem;
+import gcm.infra.CrudServiceImpl;
 import gcm.infra.JPAUtil;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,15 +19,18 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.hql.spi.ParameterTranslations;
+
 @ManagedBean
 @ViewScoped
 public class FrameworkBean {
 	//Cria uma instancia de Framework que será usado para apresentar os dados do formulario.
 	//No caso de um cadastro de novo framework, essa instancia será carregada a partir de 
 	//um formulário vazio
-	private Framework framework = new Framework();
+	private static final long serialVersionUID = 1L;
 	
-	//usado para pesquisa
+	private CrudService<Framework> crudService = new CrudServiceImpl<Framework>(Framework.class);
+	private Framework framework = new Framework();
 	private List<Framework> frameworks;
 	private String nomeFramework;
 
@@ -33,14 +40,12 @@ public class FrameworkBean {
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parametroId = parametros.get("id");
 		if (parametroId != null) {
-			EntityManager em = JPAUtil.getEntityManager();
-			framework = em.find(Framework.class, Long.valueOf(parametroId));
+			framework = crudService.buscarPorId(Long.valueOf(parametroId));
 		}
 	}
 	
 	public String salvar() {
-		EntityManager em = JPAUtil.getEntityManager();
-		em.merge(framework);
+		crudService.salvar(framework);
 				
 		FacesMessage msg = new FacesMessage("Framework cadastrado com sucesso");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -49,10 +54,10 @@ public class FrameworkBean {
 	}
 	
 	public String pesquisarFramework() {
-		EntityManager em = JPAUtil.getEntityManager();
-		TypedQuery<Framework> query = em.createNamedQuery(Framework.PESQUISAR_POR_NOME, Framework.class);
-		query.setParameter("nome", "%" + nomeFramework.toUpperCase() + "%");
-		frameworks = query.getResultList();
+		Map<String, Object> parametros = new HashMap<>();	
+		parametros.put("nome", "%" + nomeFramework.toUpperCase() + "%");
+		frameworks = crudService.pesquisarPorNamedQuery(Framework.PESQUISAR_POR_NOME, parametros);
+		
 		if (frameworks.isEmpty()) {
 			FacesMessage msg = new FacesMessage("Não foi encontrado framework");
 			FacesContext.getCurrentInstance().addMessage(null, msg);			
@@ -61,9 +66,7 @@ public class FrameworkBean {
 	}
 	
 	public String excluir(Long idFramework) {
-		EntityManager em = JPAUtil.getEntityManager();
-		Framework framework = em.find(Framework.class, idFramework);
-		em.remove(framework);
+		crudService.excluir(idFramework);
 		pesquisarFramework();
 		return "sucesso";
 	}
