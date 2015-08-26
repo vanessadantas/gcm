@@ -6,35 +6,49 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head></h:head>
 <h:body>
-	<h:form id="formPesquisa" prependId="false">
-		Pesquisar Framework
-		<h:inputText id="pesquisarFramework"
-			value="#{frameworkBean.nomeFramework}" />
-		<h:commandButton value="pesquisar"
-			action="#{frameworkBean.pesquisarFramework()}" />
-	</h:form>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:messages styleClass="alert alert-success col-xs-10"/>
+			<h:form id="formPesquisa" prependId="false">
+				<div class="container form-group cols-xs-10">
+					<label class="control-label col-xs-3">Pesquisar Framework</label>
+					<div class="col-xs-4">			
+						<h:inputText id="pesquisarFramework" styleClass="form-control"
+							value="#{frameworkBean.nomeFramework}" />
+					</div>
+					<div class="col-xs-4">
+						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
+							action="#{frameworkBean.pesquisarFramework()}" value="pesquisar">
+						</h:commandButton>
+		
+						<h:button outcome="frameworkCadastro.jsf" styleClass="btn btn-default btn-sm" 
+							aria-label="Left Align" value="novo framework">
+						</h:button>
+					</div>
+				</div>
+			</h:form>
 
-	<h:messages />
-	<br />
-	<br />
+			<h:form id="formResultado" class="col-xs-9">
+				<h:dataTable value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
+					<h:column>
+						#{framework.nome}				
+					</h:column>
 
-	<h:form id="formResultado">
-		<h:dataTable value="#{frameworkBean.frameworks}" var="framework">
-			<h:column>
-				#{framework.nome}				
-			</h:column>
-			<h:column>
-				<h:link value="alterar" outcome="frameworkCadastro.jsf">
-					<f:param name="id" value="#{framework.id}" />
-				</h:link>
+					<h:column>
+						<h:link outcome="frameworkCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+							<f:param name="id" value="#{framework.id}" />
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+						</h:link>
 
-			</h:column>
-			<h:column>
-				<h:commandLink value="excluir"
-					action="#{frameworkBean.excluir(framework.id)}"
-					id="linkExcluir" />
-			</h:column>
-		</h:dataTable>
-	</h:form>
+						<h:commandLink class="btn btn-default" aria-label="Left Align"
+							action="#{frameworkBean.excluir(framework.id)}"
+							id="linkExcluir" >
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
