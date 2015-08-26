@@ -60,11 +60,12 @@ public class FrameworkBean {
 		return "sucesso";
 	}
 	
-	public void excluir(Long idFramework) {
+	public String excluir(Long idFramework) {
 		EntityManager em = JPAUtil.getEntityManager();
 		Framework framework = em.find(Framework.class, idFramework);
 		em.remove(framework);
 		pesquisarFramework();
+		return "sucesso";
 	}
 
 	public Framework getFramework() {
