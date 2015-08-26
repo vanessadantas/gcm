@@ -6,35 +6,49 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head></h:head>
 <h:body>
-	<h:form id="formPesquisa" prependId="false">
-		Pesquisar Responsável
-		<h:inputText id="pesquisarRespensavel"
-			value="#{responsavelBean.nomeResponsavel}" />
-		<h:commandButton value="pesquisar"
-			action="#{responsavelBean.pesquisarResponsavel()}" />
-	</h:form>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
 
-	<h:messages />
-	<br />
-	<br />
+			<h:messages styleClass="alert alert-success col-xs-10"/>
+			<h:form id="formPesquisa" prependId="false">
+				<div class="container form-group cols-xs-10">
+					<label class="control-label col-xs-3">Pesquisar Responsável</label>
+					<div class="col-xs-4">			
+						<h:inputText id="pesquisarRespensavel" styleClass="form-control"
+							value="#{responsavelBean.nomeResponsavel}" />
+					</div>
+					<div class="col-xs-4">
+						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
+							action="#{responsavelBean.pesquisarResponsavel()}" value="pesquisar">
+						</h:commandButton>
+		
+						<h:button outcome="responsavelCadastro.jsf" styleClass="btn btn-default btn-sm" 
+							aria-label="Left Align" value="novo responsável">
+						</h:button>
+					</div>
+				</div>
+			</h:form>
+		
+		
+			<h:form id="formResultado" class="col-xs-9">
+				<h:dataTable value="#{responsavelBean.responsaveis}" var="responsavel" styleClass="table">
+					<h:column>
+						#{responsavel.nome}				
+					</h:column>
+					
+					<h:link outcome="responsavelCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+						<f:param name="id" value="#{responsavel.id}" />
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+					</h:link>
 
-	<h:form id="formResultado">
-		<h:dataTable value="#{responsavelBean.responsaveis}" var="responsavel">
-			<h:column>
-				#{responsavel.nome}				
-			</h:column>
-			<h:column>
-				<h:commandLink value="alterar" action="responsavelCadastro.jsf">
-					<f:param name="id" value="#{responsavel.id}" />
-				</h:commandLink>
-
-			</h:column>
-			<h:column>
-				<h:commandLink value="excluir"
-					action="#{responsavelBean.excluir(responsavel.id)}"
-					id="linkExcluir" />
-			</h:column>
-		</h:dataTable>
-	</h:form>
+					<h:commandLink class="btn btn-default" aria-label="Left Align"
+						action="#{responsavelBean.excluir(responsavel.id)}"
+						id="linkExcluir" >
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+					</h:commandLink>
+				</h:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
