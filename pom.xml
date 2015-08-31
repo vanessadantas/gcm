@@ -78,5 +78,16 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.12.Final</version>
+		</dependency>
+		<dependency>
+	        <groupId>net.sf.scannotation</groupId>
+	        <artifactId>scannotation</artifactId>
+	        <version>1.0.2</version>
+        </dependency>		
 	</dependencies>
 </project>

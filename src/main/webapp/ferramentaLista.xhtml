@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<!--  -->
+<h:body>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+
+			<h:messages styleClass="alert alert-success"/>
+
+			<h:form id="formPesquisa" prependId="false">
+				<div class="container form-group">
+					<label class="control-label col-xs-3">Pesquisar Ferramenta</label>
+
+					<div class="input-group col-xs-9">
+						<h:inputText id="pesquisarFerramenta" value="#{ferramentaBean.nomeferramenta}" styleClass="form-control"/>
+
+						<span class="input-group-btn">				
+							<h:commandLink styleClass="btn btn-default" 
+								action="#{ferramentaBean.pesquisarFerramenta()}" >
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> pesquisar
+							</h:commandLink>
+							<h:link outcome="ferramentaCadastro.jsf" styleClass="btn btn-default">
+								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> nova ferramenta
+							</h:link>
+						</span>
+					</div>
+				</div>
+			</h:form>		
+		
+			<h:form id="formResultado">
+				<h:dataTable value="#{ferramentaBean.ferramentas}" var="ferramenta" styleClass="table">
+					<h:column >
+						#{ferramenta.nome}				
+					</h:column>
+					<h:column>
+						<span class="btn-group" role="group">
+							<h:commandLink action="ferramentaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+								<f:param name="id" value="#{ferramenta.id}" />
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> alterar
+							</h:commandLink>
+			
+							<h:commandLink class="btn btn-default" aria-label="Left Align"
+								action="#{ferramentaBean.excluir(ferramenta.id)}"
+								id="linkExcluir">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> excluir
+							</h:commandLink>
+						</span>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

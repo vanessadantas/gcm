@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,15 +18,20 @@ import javax.persistence.Transient;
 /**
  * Representa um sistema ou um projeto de sistema dentro da organização.
  * É o principal artefato gerenciado pela equipe de GCM.  
- * @author vanessa
  *
  */
 @Entity
-@NamedQuery(name=Sistema.PESQUISAR_POR_NOME, 
-			query="select s from Sistema s where upper(s.nome) like :nome order by s.nome")
+@NamedQueries({
+	@NamedQuery(name=Sistema.PESQUISAR_POR_NOME, 
+				query="select s from Sistema s where upper(s.nome) like :nome order by s.nome"),
+	@NamedQuery(name=Sistema.PESQUISAR_POR_NOME_EXATO, 
+				query="select s from Sistema s where upper(s.nome) = :nome")
+	
+})
 public class Sistema {
 	
 	public static final String PESQUISAR_POR_NOME = "sistema.pesquisarPorNome";
+	public static final String PESQUISAR_POR_NOME_EXATO = "sistema.pesquisarPorNomeExato";
 	
 	@Id
 	@GeneratedValue
@@ -46,8 +52,12 @@ public class Sistema {
 	private String observacao;	
 	@OneToMany
 	@JoinColumn(name="sistema_id")
-	private Set<Deploy> deploys;
+	private Set<Deploy> deploys = new HashSet<>();
 	
+	public void adicionarDeploy(Deploy deploy) {
+		deploys.add(deploy);
+	}
+
 	@Override
 	public String toString() {
 		return this.sigla + " - " + this.nome;
@@ -180,9 +190,5 @@ public class Sistema {
 
 	public Set<Deploy> getDeploys() {
 		return deploys;
-	}
-
-	public void setDeploys(Set<Deploy> deploys) {
-		this.deploys = deploys;
 	}
 }
