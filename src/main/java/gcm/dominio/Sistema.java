@@ -3,6 +3,7 @@ package gcm.dominio;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,14 +25,14 @@ import javax.persistence.Transient;
 @NamedQueries({
 	@NamedQuery(name=Sistema.PESQUISAR_POR_NOME, 
 				query="select s from Sistema s where upper(s.nome) like :nome order by s.nome"),
-	@NamedQuery(name=Sistema.PESQUISAR_POR_NOME_EXATO, 
-				query="select s from Sistema s where upper(s.nome) = :nome")
+	@NamedQuery(name=Sistema.PESQUISAR_POR_SIGLA_EXATA, 
+				query="select s from Sistema s where upper(s.sigla) = :sigla")
 	
 })
 public class Sistema {
 	
 	public static final String PESQUISAR_POR_NOME = "sistema.pesquisarPorNome";
-	public static final String PESQUISAR_POR_NOME_EXATO = "sistema.pesquisarPorNomeExato";
+	public static final String PESQUISAR_POR_SIGLA_EXATA = "sistema.pesquisarPorSiglaExata";
 	
 	@Id
 	@GeneratedValue
@@ -50,7 +51,7 @@ public class Sistema {
 	private Set<Sistema> dependencias;
 	@Column
 	private String observacao;	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="sistema_id")
 	private Set<Deploy> deploys = new HashSet<>();
 	
