@@ -21,8 +21,6 @@ public class Ferramenta {
 	@Column(length=100)
 	private String fornecedor;	
 	
-	
-	
 	@Override
 	public String toString() {
 		return nome;
