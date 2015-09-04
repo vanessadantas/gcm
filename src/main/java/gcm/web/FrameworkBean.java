@@ -1,12 +1,11 @@
 package gcm.web;
 
 import gcm.aplicacao.CrudService;
-import gcm.dominio.Ferramenta;
 import gcm.dominio.Framework;
 import gcm.dominio.Linguagem;
 import gcm.infra.CrudServiceImpl;
-import gcm.infra.JPAUtil;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,14 +15,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import org.hibernate.hql.spi.ParameterTranslations;
 
 @ManagedBean
 @ViewScoped
-public class FrameworkBean {
+public class FrameworkBean implements Serializable {
 	//Cria uma instancia de Framework que será usado para apresentar os dados do formulario.
 	//No caso de um cadastro de novo framework, essa instancia será carregada a partir de 
 	//um formulário vazio
