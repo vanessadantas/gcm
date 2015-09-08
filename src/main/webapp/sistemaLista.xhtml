@@ -35,7 +35,10 @@
 			<h:form id="formResultado">
 				<h:dataTable value="#{sistemaBean.sistemas}" var="sistema">
 					<h:column>
-						#{sistema.nome}				
+					<h:link value="detalhes" outcome="sistemaDetalhes.jsf">
+					<f:param name="id" value="#{sistema.id}" />
+						#{sistema.nome}	
+						</h:link>			
 					</h:column>
 					<h:column>
 						<h:link value="alterar" outcome="sistemaCadastro.jsf">

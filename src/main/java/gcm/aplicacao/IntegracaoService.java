@@ -45,7 +45,7 @@ public class IntegracaoService {
 
 	private boolean carregarSistema(String siglaSistema) {
 		TypedQuery<Sistema> query = em.createNamedQuery(Sistema.PESQUISAR_POR_SIGLA_EXATA, Sistema.class);
-		query.setParameter("sigla", siglaSistema);
+		query.setParameter("sigla", siglaSistema.toUpperCase());
 		List<Sistema> sistemas = query.getResultList();
 		
 		if (sistemas.size() > 0) {
