@@ -56,8 +56,10 @@
 				<h:inputHidden value="#{arquiteturaBean.arquitetura.id}" />
 				<div class="form-group">
         			<div class="col-xs-offset-2 col-xs-10">
-						<h:commandButton value="salvar" styleClass="btn btn-primary"
-							action="#{arquiteturaBean.salvar()}" />
+						<h:commandLink styleClass="btn btn-primary"
+							action="#{arquiteturaBean.salvar()}">
+							<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+					</h:commandLink>
 					</div>
 				</div>
 			</h:form>

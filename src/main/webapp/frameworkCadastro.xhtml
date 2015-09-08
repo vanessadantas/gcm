@@ -25,7 +25,10 @@
 					</h:selectOneMenu>
 					<h:inputHidden value="#{frameworkBean.framework.id}"/>
 		
-					<h:commandButton value="salvar" action="#{frameworkBean.salvar()}"/>
+					<h:commandLink styleClass="btn btn-primary"
+					action="#{frameworkBean.salvar()}">
+					<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+					</h:commandLink>
 				</h:panelGrid>
 			</h:form>
 		</ui:define>
