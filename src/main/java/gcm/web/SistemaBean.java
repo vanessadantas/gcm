@@ -198,5 +198,4 @@ public class SistemaBean {
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
 	}
-
 }
