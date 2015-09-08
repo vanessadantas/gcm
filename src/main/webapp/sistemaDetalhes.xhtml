@@ -10,23 +10,13 @@
 
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-
-			<h:form id="formDetalhes" prependId="false">
-				<div class="container form-group">
-					<label class="control-label col-xs-3">Detalhes do Sistema</label>
-				</div>
-			</h:form>
-			<h:form id="formResultado">
-					
-					Nome: #{sistemaBean.sistema.nome} <br/>	
-					Sigla: #{sistemaBean.sistema.sigla} <br/>				
-				
-						#{sistemaBean.sistema.arquitetura.nome} <br/>
-						#{sistemaBean.sistema.arquitetura.descricao} <br/>
-						#{sistemaBean.sistema.arquitetura.frameworks}	 <br/>
-						#{sistemaBean.sistema.responsaveis}
-						
-			</h:form>
+			<div>
+				<h2>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome} </h2>
+				<h3>#{sistemaBean.sistema.arquitetura.descricao} </h3>
+				Arquitetura: #{sistemaBean.sistema.arquitetura.nome} <br />
+				Frameworks: #{sistemaBean.sistema.arquitetura.frameworks} <br />
+				Responsáveis: #{sistemaBean.sistema.responsaveis}
+			</div>
 		</ui:define>
 	</ui:composition>
 </h:body>
