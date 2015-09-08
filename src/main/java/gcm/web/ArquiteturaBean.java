@@ -1,12 +1,9 @@
 package gcm.web;
 
-import gcm.dominio.Arquitetura;
-import gcm.dominio.Framework;
-import gcm.dominio.Linguagem;
-import gcm.infra.JPAUtil;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,17 +12,27 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+
+import gcm.aplicacao.CrudService;
+import gcm.dominio.Arquitetura;
+import gcm.dominio.Framework;
+import gcm.dominio.Linguagem;
+import gcm.infra.CrudServiceImpl;
+import gcm.infra.JPAUtil;
 
 @ManagedBean
 @ViewScoped
-public class ArquiteturaBean {
+public class ArquiteturaBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	//Usado para cadastro
 	private Arquitetura arquitetura = new Arquitetura();
 	private List<Framework> frameworks = new ArrayList<>();
 	private List<String> idsFrameworksSelecionados = new ArrayList<>();
 	
 	//usado para pesquisa
+	private CrudService<Arquitetura> crudService = new CrudServiceImpl<>(Arquitetura.class);
+	private CrudService<Framework> crudServiceFramework = new CrudServiceImpl<>(Framework.class);
 	private List<Arquitetura> arquiteturas;
 	private String nomeArquitetura;
 	private String linguagem, ultimaLinguagemPesquisada;
@@ -34,8 +41,7 @@ public class ArquiteturaBean {
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		String parametroId = parametros.get("id");
 		if (parametroId != null) {
-			EntityManager em = JPAUtil.getEntityManager();
-			arquitetura = em.find(Arquitetura.class, Long.valueOf(parametroId));
+			arquitetura = crudService.buscarPorId(Long.valueOf(parametroId));
 			
 			for (Framework fw : arquitetura.getFrameworks()) {
 				idsFrameworksSelecionados.add(fw.getId().toString());
@@ -45,16 +51,14 @@ public class ArquiteturaBean {
 	}
 	
 	public String salvar() {
-		EntityManager em = JPAUtil.getEntityManager();
-		
 		//TODO usar o frameworkConverter - Solução de contorno para o erro "Valor não é válido"
 		arquitetura.getFrameworks().clear();
+		
 		for (String id : idsFrameworksSelecionados) {
-			Framework fw = em.find(Framework.class, Long.valueOf(id));
-			arquitetura.getFrameworks().add(fw);
+			Framework framework = crudServiceFramework.buscarPorId(Long.valueOf(id));
+			arquitetura.getFrameworks().add(framework);
 		}
-		em.merge(arquitetura);
-				
+		crudService.salvar(arquitetura);
 		FacesMessage msg = new FacesMessage("Arquitetura cadastrada com sucesso");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true); 
@@ -62,10 +66,10 @@ public class ArquiteturaBean {
 	}
 	
 	public String pesquisarArquitetura() {
-		EntityManager em = JPAUtil.getEntityManager();
-		TypedQuery<Arquitetura> query = em.createNamedQuery(Arquitetura.PESQUISAR_POR_NOME, Arquitetura.class);
-		query.setParameter("nome", "%" + nomeArquitetura.toUpperCase() + "%");
-		arquiteturas = query.getResultList();
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("nome", "%" + nomeArquitetura.toUpperCase() + "%");
+		arquiteturas = crudService.pesquisarPorNamedQuery(Arquitetura.PESQUISAR_POR_NOME, parametros);
+	
 		if (arquiteturas.isEmpty()) {
 			FacesMessage msg = new FacesMessage("Não foi encontrada a Arquitetura");
 			FacesContext.getCurrentInstance().addMessage(null, msg);			
@@ -75,18 +79,15 @@ public class ArquiteturaBean {
 	
 	private void pesquisarFrameworks() {
 		if (linguagem != null && ! linguagem.equals(ultimaLinguagemPesquisada)) {
-			EntityManager em = JPAUtil.getEntityManager();
-			TypedQuery<Framework> query = em.createQuery("select f from Framework f where linguagem = :linguagem", Framework.class);
-			query.setParameter("linguagem", Linguagem.valueOf(linguagem));
-			frameworks = query.getResultList();
+			Map<String, Object> parametros = new HashMap<>();
+			parametros.put("linguagem", Linguagem.valueOf(linguagem));
+			frameworks = crudServiceFramework.pesquisarPorNamedQuery(Framework.PESQUISAR_POR_LINGUAGEM, parametros);
 			ultimaLinguagemPesquisada = linguagem;
 		}
 	}
 	
 	public String excluir(Long idArquitetura) {
-		EntityManager em = JPAUtil.getEntityManager();
-		Arquitetura arquitetura = em.find(Arquitetura.class, idArquitetura);
-		em.remove(arquitetura);
+		crudService.excluir(idArquitetura);
 		pesquisarArquitetura();
 		return "sucesso";
 	}

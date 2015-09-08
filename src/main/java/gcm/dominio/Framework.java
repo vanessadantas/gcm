@@ -6,13 +6,19 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name=Framework.PESQUISAR_POR_NOME, 
-query="select f from Framework f where upper(f.nome) like :nome order by f.nome")
+@NamedQueries({
+	@NamedQuery(name=Framework.PESQUISAR_POR_NOME, 
+		query="select f from Framework f where upper(f.nome) like :nome order by f.nome"),
+	@NamedQuery(name=Framework.PESQUISAR_POR_LINGUAGEM, 
+		query="select f from Framework f where f.linguagem = :linguagem")
+	})
 public class Framework {
 	public static final String PESQUISAR_POR_NOME = "framework.pesquisarPorNome";
+	public static final String PESQUISAR_POR_LINGUAGEM = "framework.pesquisarPorLinguagem";
 	
 	@Id
 	@GeneratedValue
