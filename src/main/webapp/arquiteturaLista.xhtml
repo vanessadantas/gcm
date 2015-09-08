@@ -18,15 +18,15 @@
 					<div class="input-group col-xs-9">
 						<h:inputText id="pesquisarArquitetura" styleClass="form-control"
 							value="#{arquiteturaBean.nomeArquitetura}" />
-						<span class="input-group-btn"> 
-							<h:commandButton
-								styleClass="btn btn-default" aria-label="Left Align"
-								action="#{arquiteturaBean.pesquisarArquitetura()}"
-								value="pesquisar">
-							</h:commandButton> 
-							<h:button outcome="arquiteturaCadastro.jsf" styleClass="btn btn-default" 
-								aria-label="Left Align" value="nova arquitetura">
-							</h:button>
+						
+							<span class="input-group-btn">				
+							<h:commandLink styleClass="btn btn-default" 
+								action="#{arquiteturaBean.pesquisarArquitetura()}">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
+							</h:commandLink>
+							<h:link outcome="arquiteturaCadastro.jsf" styleClass="btn btn-default" >
+								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
+							</h:link>
 						</span>
 					</div>
 				</div>
@@ -41,14 +41,15 @@
 						#{arquitetura.descricao}				
 					</h:column>
 					<h:column>
-						<h:link outcome="arquiteturaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
-							<f:param name="id" value="#{arquitetura.id}" />
-							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-						</h:link>
-						<h:commandLink class="btn btn-default" aria-label="Left Align"
-							action="#{arquiteturaBean.excluir(arquitetura.id)}"
-							id="linkExcluir" >
-							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						<span class="btn-group" role="group">
+						<h:commandLink action="arquiteturaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+								<f:param name="id" value="#{arquitetura.id}" />
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
+						</h:commandLink>
+						</span>
+							<h:commandLink styleClass="btn btn-default" 
+							action="#{arquiteturaBean.excluir(arquitetura.id)}"	id="linkExcluir" >
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
 						</h:commandLink>
 					</h:column>
 				</h:dataTable>

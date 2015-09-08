@@ -38,8 +38,10 @@
 				<h:inputHidden value="#{responsavelBean.responsavel.id}"/>
 				<div class="form-group">
         			<div class="col-xs-offset-2 col-xs-10">
-        				<h:commandButton value="salvar" action="#{responsavelBean.salvar()}"
-						styleClass="btn btn-primary"/>
+        				<h:commandLink styleClass="btn btn-primary"
+        				action="#{responsavelBean.salvar()}">
+						<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+					</h:commandLink>
 					</div>
 				</div>
 			</h:form>
