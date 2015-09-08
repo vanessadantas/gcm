@@ -4,6 +4,7 @@ import gcm.aplicacao.CrudService;
 import gcm.dominio.Framework;
 import gcm.dominio.Linguagem;
 import gcm.infra.CrudServiceImpl;
+import gcm.infra.GcmPersistenceException;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -61,8 +62,15 @@ public class FrameworkBean implements Serializable {
 	}
 	
 	public String excluir(Long idFramework) {
-		crudService.excluir(idFramework);
-		pesquisarFramework();
+		try {
+			crudService.excluir(idFramework);
+			FacesMessage msg = new FacesMessage("Framework excluído com sucesso");
+			FacesContext.getCurrentInstance().addMessage(null, msg);			
+			pesquisarFramework();
+		} catch(GcmPersistenceException e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Não é possível excluir o framework pois existem arquiteturas que dependem dele.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);			
+		}
 		return "sucesso";
 	}
 
