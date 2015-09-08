@@ -1,5 +1,12 @@
 package gcm.web;
 
+import gcm.aplicacao.CrudService;
+import gcm.dominio.Arquitetura;
+import gcm.dominio.Linguagem;
+import gcm.dominio.Responsavel;
+import gcm.dominio.Sistema;
+import gcm.infra.CrudServiceImpl;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,17 +17,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
-import gcm.aplicacao.CrudService;
-import gcm.dominio.Arquitetura;
-import gcm.dominio.Framework;
-import gcm.dominio.Linguagem;
-import gcm.dominio.Responsavel;
-import gcm.dominio.Sistema;
-import gcm.infra.CrudServiceImpl;
-import gcm.infra.JPAUtil;
 
 @ManagedBean
 @ViewScoped

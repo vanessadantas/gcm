@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 public class CrudServiceImpl<T> implements CrudService<T> {
@@ -34,16 +35,30 @@ public class CrudServiceImpl<T> implements CrudService<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void excluir(T t) {
-		EntityManager em = JPAUtil.getEntityManager();
-		T ref = (T) em.getReference(t.getClass(), t);
-		em.remove(ref);
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			T ref = (T) em.getReference(t.getClass(), t);
+			em.remove(ref);
+			em.flush();
+		} catch (PersistenceException e) {
+			if (e.getCause().getClass().equals(org.hibernate.exception.ConstraintViolationException.class)) {
+				throw new GcmPersistenceException(e);
+			}
+		}
 	}
 	
 	@Override
 	public void excluir(Long id) {
 		EntityManager em = JPAUtil.getEntityManager();
 		T t = em.find(tipoClasse, id);
-		em.remove(t);
+		try {
+			em.remove(t);
+			em.flush();
+		} catch (PersistenceException e) {
+			if (e.getCause().getClass().equals(org.hibernate.exception.ConstraintViolationException.class)) {
+				throw new GcmPersistenceException(e);
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
