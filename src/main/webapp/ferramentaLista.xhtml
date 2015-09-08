@@ -22,10 +22,10 @@
 						<span class="input-group-btn">				
 							<h:commandLink styleClass="btn btn-default" 
 								action="#{ferramentaBean.pesquisarFerramenta()}" >
-								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> pesquisar
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
 							</h:commandLink>
 							<h:link outcome="ferramentaCadastro.jsf" styleClass="btn btn-default">
-								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> nova ferramenta
+								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
 							</h:link>
 						</span>
 					</div>
@@ -41,13 +41,13 @@
 						<span class="btn-group" role="group">
 							<h:commandLink action="ferramentaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
 								<f:param name="id" value="#{ferramenta.id}" />
-								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> alterar
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
 							</h:commandLink>
 			
 							<h:commandLink class="btn btn-default" aria-label="Left Align"
 								action="#{ferramentaBean.excluir(ferramenta.id)}"
 								id="linkExcluir">
-								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> excluir
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
 							</h:commandLink>
 						</span>
 					</h:column>

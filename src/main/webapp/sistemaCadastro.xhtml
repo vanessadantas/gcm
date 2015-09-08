@@ -114,8 +114,10 @@
 				<div class="form-group">
 					<div class="col-xs-offset-2 col-xs-6">
 						<h:inputHidden value="#{sistemaBean.sistema.id}" />
-						<h:commandButton value="salvar" styleClass="btn btn-primary"
-							action="#{sistemaBean.salvar()}" />
+						<h:commandLink styleClass="btn btn-primary"
+							action="#{sistemaBean.salvar()}">
+							<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+					</h:commandLink>
 					</div>
 				</div>
 				

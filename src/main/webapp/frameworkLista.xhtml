@@ -9,42 +9,45 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form id="formPesquisa" prependId="false">
-				<div class="container form-group cols-xs-10">
+				<div class="container form-group">
 					<label class="control-label col-xs-3">Pesquisar Framework</label>
-					<div class="col-xs-4">			
-						<h:inputText id="pesquisarFramework" styleClass="form-control"
-							value="#{frameworkBean.nomeFramework}" />
-					</div>
-					<div class="col-xs-4">
-						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
-							action="#{frameworkBean.pesquisarFramework()}" value="pesquisar">
-						</h:commandButton>
-		
-						<h:button outcome="frameworkCadastro.jsf" styleClass="btn btn-default btn-sm" 
-							aria-label="Left Align" value="novo framework">
-						</h:button>
+				
+					<div class="input-group col-xs-9">			
+						<h:inputText id="pesquisarFramework" styleClass="form-control" value="#{frameworkBean.nomeFramework}" />
+					
+					<span class="input-group-btn">				
+						<h:commandLink styleClass="btn btn-default" 
+							action="#{frameworkBean.pesquisarFramework()}">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
+						</h:commandLink>
+						<h:link outcome="frameworkCadastro.jsf" styleClass="btn btn-default">
+							<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
+						</h:link>
+						</span>
 					</div>
 				</div>
 			</h:form>
 
-			<h:form id="formResultado" class="col-xs-9">
+			<h:form id="formResultado">
 				<h:dataTable value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
 					<h:column>
 						#{framework.nome}				
 					</h:column>
-
 					<h:column>
-						<h:link outcome="frameworkCadastro.jsf" class="btn btn-default" aria-label="Left Align">
-							<f:param name="id" value="#{framework.id}" />
-							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-						</h:link>
-
-						<h:commandLink onclick="if (! confirm('Deseja realmente excluir o item?')) return false" 
-							class="btn btn-default" aria-label="Left Align"
-							action="#{frameworkBean.excluir(framework.id)}"
-							id="linkExcluir" >
-							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-						</h:commandLink>
+						<span class="btn-group" role="group">
+							<h:commandLink action="frameworkCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+								<f:param name="id" value="#{framework.id}" />
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
+							</h:commandLink>
+			
+							<h:commandLink
+								onclick="if (! confirm('Deseja realmente excluir o item?')) return false" 
+								class="btn btn-default" aria-label="Left Align"
+								action="#{frameworkBean.excluir(framework.id)}"
+								id="linkExcluir" >
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+							</h:commandLink>
+						</span>
 					</h:column>
 				</h:dataTable>
 			</h:form>

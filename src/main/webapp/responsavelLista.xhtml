@@ -9,43 +9,43 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 
-			<h:messages styleClass="alert alert-success col-xs-10"/>
 			<h:form id="formPesquisa" prependId="false">
-				<div class="container form-group cols-xs-10">
+				<div class="container form-group">
 					<label class="control-label col-xs-3">Pesquisar Responsável</label>
-					<div class="col-xs-4">			
-						<h:inputText id="pesquisarRespensavel" styleClass="form-control"
-							value="#{responsavelBean.nomeResponsavel}" />
-					</div>
-					<div class="col-xs-4">
-						<h:commandButton styleClass="btn btn-default btn-sm" aria-label="Left Align"
-							action="#{responsavelBean.pesquisarResponsavel()}" value="pesquisar">
-						</h:commandButton>
-		
-						<h:button outcome="responsavelCadastro.jsf" styleClass="btn btn-default btn-sm" 
-							aria-label="Left Align" value="novo responsável">
-						</h:button>
+					
+					<div class="input-group col-xs-9">			
+						<h:inputText id="pesquisarRespensavel" styleClass="form-control" value="#{responsavelBean.nomeResponsavel}" />
+					
+						<span class="input-group-btn">	
+							<h:commandLink styleClass="btn btn-default" aria-label="Left Align"
+								action="#{responsavelBean.pesquisarResponsavel()}">
+								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Pesquisar
+							</h:commandLink>
+							<h:link outcome="responsavelCadastro.jsf" styleClass="btn btn-default">
+								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
+							</h:link>
+						</span>
 					</div>
 				</div>
 			</h:form>
 		
-		
-			<h:form id="formResultado" class="col-xs-9">
+			<h:form id="formResultado">
 				<h:dataTable value="#{responsavelBean.responsaveis}" var="responsavel" styleClass="table">
 					<h:column>
 						#{responsavel.nome}				
 					</h:column>
-					
-					<h:link outcome="responsavelCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+					<h:column>
+					<h:commandLink outcome="responsavelCadastro.jsf" class="btn btn-default" aria-label="Left Align">
 						<f:param name="id" value="#{responsavel.id}" />
-						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-					</h:link>
+						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
+					</h:commandLink>
 
 					<h:commandLink class="btn btn-default" aria-label="Left Align"
 						action="#{responsavelBean.excluir(responsavel.id)}"
 						id="linkExcluir" >
-						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
 					</h:commandLink>
+					</h:column>
 				</h:dataTable>
 			</h:form>
 		</ui:define>
