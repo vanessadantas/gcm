@@ -15,14 +15,16 @@
 					<label class="control-label col-xs-2">Nome</label>
 					<div class="col-xs-6">			
 						<h:inputText value="#{arquiteturaBean.arquitetura.nome}"
-							label="Nome" styleClass="form-control" />
+							label="Nome" styleClass="form-control" required="true" maxlength="100"/>
 					</div>
 				</div>
 						
 				<div class="form-group">
 					<label class="control-label col-xs-2">Descrição</label>
 					<div class="col-xs-6">			
-						<h:inputTextarea value="#{arquiteturaBean.arquitetura.descricao}" styleClass="form-control"/>
+						<h:inputTextarea value="#{arquiteturaBean.arquitetura.descricao}" styleClass="form-control" label="Descrição">
+							<f:validateLength maximum="1024" />
+						</h:inputTextarea>
 					</div>
 				</div>
 				
@@ -45,7 +47,7 @@
 				<div class="form-group">
 					<label class="control-label col-xs-2">Frameworks</label>
 					<div class="col-xs-6">			
-						<h:selectManyCheckbox layout="pageDirection" id="checkBoxesFramework" 
+						<h:selectManyCheckbox layout="pageDirection" id="checkBoxesFramework" label="Frameworks"
 							value="#{arquiteturaBean.idsFrameworksSelecionados}" required="true">
 							<f:selectItems value="#{arquiteturaBean.frameworks}"
 								var="framework" itemLabel="#{framework.nome}" itemValue="#{framework.id}"/>

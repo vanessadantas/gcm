@@ -2,10 +2,10 @@ package gcm.web;
 
 import gcm.aplicacao.CrudService;
 import gcm.dominio.Ferramenta;
-import gcm.dominio.Responsavel;
 import gcm.infra.CrudServiceImpl;
-import gcm.infra.JPAUtil;
+import gcm.infra.GcmPersistenceException;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
-public class FerramentaBean {
+public class FerramentaBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private CrudService<Ferramenta> crudService = new CrudServiceImpl<Ferramenta>(Ferramenta.class);
@@ -55,8 +55,15 @@ public class FerramentaBean {
 		}
 		
 		public String excluir(Long idFerramenta) {
-			crudService.excluir(idFerramenta);
-			pesquisarFerramenta();
+			try {
+				crudService.excluir(idFerramenta);
+				FacesMessage msg = new FacesMessage("Ferramenta excluída com sucesso");
+				FacesContext.getCurrentInstance().addMessage(null, msg);			
+				pesquisarFerramenta();
+			} catch(GcmPersistenceException e) {
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Não é possível excluir a ferramenta pois existem sistemas que dependem dela.", null);
+				FacesContext.getCurrentInstance().addMessage(null, msg);			
+			}
 			return "sucesso";
 		}
 
