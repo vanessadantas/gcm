@@ -7,6 +7,7 @@ import gcm.dominio.Responsavel;
 import gcm.dominio.Sistema;
 import gcm.infra.CrudServiceImpl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,7 +21,9 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
-public class SistemaBean {
+public class SistemaBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private List<Arquitetura> arquiteturas;
 	private List<Sistema> sistemas;
 	private String nomeArquitetura;
