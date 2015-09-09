@@ -9,10 +9,8 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 
-			<h:messages styleClass="alert alert-success"/>
-
 			<h:form id="formPesquisa" prependId="false">
-				<div class="container row form-group">
+				<div class="container form-group">
 					<label class="control-label col-xs-3">Pesquisar Arquitetura</label>
 					
 					<div class="input-group col-xs-9">
@@ -25,7 +23,7 @@
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
 							</h:commandLink>
 							<h:link outcome="arquiteturaCadastro.jsf" styleClass="btn btn-default" >
-								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
+								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Arquitetura
 							</h:link>
 						</span>
 					</div>
@@ -33,26 +31,24 @@
 			</h:form>
 		
 			<h:form id="formResultado">
-				<h:dataTable value="#{arquiteturaBean.arquiteturas}" var="arquitetura" styleClass="table">
-					<h:column>
-						#{arquitetura.nome}				
-					</h:column>
-					<h:column>
-						#{arquitetura.descricao}				
-					</h:column>
-					<h:column>
-						<span class="btn-group" role="group">
-						<h:commandLink action="arquiteturaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
-								<f:param name="id" value="#{arquitetura.id}" />
-							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
-						</h:commandLink>
+				<ui:repeat var="arquitetura" value="#{arquiteturaBean.arquiteturas}" >
+						<span class="col-md-3 col-md-offset-1">
+							#{arquitetura.nome}				
 						</span>
+						<span class="col-md-5">
+							#{arquitetura.descricao}			
+						</span>	
+						<span class="btn-group col-md-3" role="group">
+							<h:commandLink action="arquiteturaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+									<f:param name="id" value="#{arquitetura.id}" />
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
+							</h:commandLink>
 							<h:commandLink styleClass="btn btn-default" 
-							action="#{arquiteturaBean.excluir(arquitetura.id)}"	id="linkExcluir" >
-							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
-						</h:commandLink>
-					</h:column>
-				</h:dataTable>
+								action="#{arquiteturaBean.excluir(arquitetura.id)}"	id="linkExcluir" >
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+							</h:commandLink>
+						</span>
+				</ui:repeat>
 			</h:form>
 		</ui:define>
 	</ui:composition>

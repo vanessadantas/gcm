@@ -9,16 +9,12 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form  styleClass="form-horizontal" prependId="false">
-				<h:messages style="list-style-position:inside; clear:both;"
-					errorClass="alert alert-danger" 
-					infoClass="alert alert-info" 
-					warnClass="alert alert-warning" />
-				
+				<h2 class="col-xs-offset-1">Cadastro - Ferramenta</h2>				
 				<div class="form-group">
 					<label class="control-label col-xs-2">Nome</label>
 					<div class="col-xs-6">			
 						<h:inputText value="#{ferramentaBean.ferramenta.nome}"
-							label="Nome" styleClass="form-control" required="true"/>
+							label="Nome" styleClass="form-control" required="true" maxlength="100"/>
 					</div>
 				</div>
 
@@ -26,7 +22,7 @@
 					<label class="control-label col-xs-2">Fornecedor</label>
 					<div class="col-xs-6">			
 						<h:inputText value="#{ferramentaBean.ferramenta.fornecedor}"
-							label="Fornecedor" styleClass="form-control" />
+							label="Fornecedor" styleClass="form-control" maxlength="100"/>
 					</div>
 				</div>
 				<h:inputHidden value="#{ferramentaBean.ferramenta.id}"/>
