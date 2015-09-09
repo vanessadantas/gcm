@@ -18,6 +18,7 @@ import gcm.dominio.Arquitetura;
 import gcm.dominio.Framework;
 import gcm.dominio.Linguagem;
 import gcm.infra.CrudServiceImpl;
+import gcm.infra.GcmPersistenceException;
 import gcm.infra.JPAUtil;
 
 @ManagedBean
@@ -87,8 +88,15 @@ public class ArquiteturaBean implements Serializable {
 	}
 	
 	public String excluir(Long idArquitetura) {
-		crudService.excluir(idArquitetura);
-		pesquisarArquitetura();
+		try {
+			crudService.excluir(idArquitetura);
+			FacesMessage msg = new FacesMessage("Arquitetura excluída com sucesso");
+			FacesContext.getCurrentInstance().addMessage(null, msg);			
+			pesquisarArquitetura();
+		} catch(GcmPersistenceException e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Não é possível excluir a arquitetura pois existem sistemas que dependem dela.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);			
+		}
 		return "sucesso";
 	}
 	
