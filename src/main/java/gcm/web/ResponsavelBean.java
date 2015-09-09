@@ -3,6 +3,7 @@ package gcm.web;
 import gcm.aplicacao.CrudService;
 import gcm.dominio.Responsavel;
 import gcm.infra.CrudServiceImpl;
+import gcm.infra.GcmPersistenceException;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -54,9 +55,17 @@ public class ResponsavelBean implements Serializable {
 	}
 	
 	public void excluir(Long idResponsavel) {
-		crudService.excluir(idResponsavel);
-		pesquisarResponsavel();
+		try {
+			crudService.excluir(idResponsavel);
+			FacesMessage msg = new FacesMessage("Responsável excluído com sucesso");
+			FacesContext.getCurrentInstance().addMessage(null, msg);			
+			pesquisarResponsavel();
+		} catch(GcmPersistenceException e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Não é possível excluir o Responsável pois existe sistema que depende dele.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);			
+		}
 	}
+	
 	
 	public String getNomeResponsavel() {
 		return nomeResponsavel;

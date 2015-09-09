@@ -29,14 +29,11 @@
 			</h:form>
 
 			<h:form id="formResultado">
-				<h:dataTable value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
-					<h:column>
-						<span class="col-md-3 col-md-offset-3">
+				<ui:repeat value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
+						<span class="col-md-3 col-md-offset-1">
 							#{framework.nome}				
 						</span>
-					</h:column>
-					<h:column>
-						<span class="btn-group col-md-3 col-md-offset-9" role="group">
+						<span class="btn-group col-md-3 col-md-offset-5" role="group">
 							<h:commandLink action="frameworkCadastro.jsf" class="btn btn-default" aria-label="Left Align">
 								<f:param name="id" value="#{framework.id}" />
 								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
@@ -50,8 +47,7 @@
 								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
 							</h:commandLink>
 						</span>
-					</h:column>
-				</h:dataTable>
+					</ui:repeat>
 			</h:form>
 		</ui:define>
 	</ui:composition>
