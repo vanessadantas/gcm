@@ -8,12 +8,6 @@
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-<<<<<<< HEAD
-		
-			<h:messages styleClass="alert alert-success col-xs-10"/>
-			
-=======
->>>>>>> refs/heads/master
 			<h:form id="formPesquisa" prependId="false">
 				<div class="container form-group">
 					<label class="control-label col-xs-3">Pesquisar Framework</label>
@@ -37,22 +31,20 @@
 			<h:form id="formResultado">
 				<h:dataTable value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
 					<h:column>
-						#{framework.nome}				
+						<span class="col-md-3 col-md-offset-3">
+							#{framework.nome}				
+						</span>
 					</h:column>
 					<h:column>
-						<span class="btn-group" role="group">
+						<span class="btn-group col-md-3 col-md-offset-9" role="group">
 							<h:commandLink action="frameworkCadastro.jsf" class="btn btn-default" aria-label="Left Align">
 								<f:param name="id" value="#{framework.id}" />
 								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
 							</h:commandLink>
 			
-<<<<<<< HEAD
-							<h:commandLink class="btn btn-default" aria-label="Left Align"
-=======
 							<h:commandLink
 								onclick="if (! confirm('Deseja realmente excluir o item?')) return false" 
 								class="btn btn-default" aria-label="Left Align"
->>>>>>> refs/heads/master
 								action="#{frameworkBean.excluir(framework.id)}"
 								id="linkExcluir" >
 								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir

@@ -19,7 +19,7 @@
 						<span class="input-group-btn">	
 							<h:commandLink styleClass="btn btn-default" aria-label="Left Align"
 								action="#{responsavelBean.pesquisarResponsavel()}">
-								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Pesquisar
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
 							</h:commandLink>
 							<h:link outcome="responsavelCadastro.jsf" styleClass="btn btn-default">
 								<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
@@ -32,20 +32,24 @@
 			<h:form id="formResultado">
 				<h:dataTable value="#{responsavelBean.responsaveis}" var="responsavel" styleClass="table">
 					<h:column>
-						#{responsavel.nome}				
+					<span class="col-md-3 col-md-offset-3">
+						#{responsavel.nome}
+						</span>				
 					</h:column>
-					<h:column>
-					<h:commandLink outcome="responsavelCadastro.jsf" class="btn btn-default" aria-label="Left Align">
-						<f:param name="id" value="#{responsavel.id}" />
-						<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
-					</h:commandLink>
-
-					<h:commandLink class="btn btn-default" aria-label="Left Align"
-						action="#{responsavelBean.excluir(responsavel.id)}"
-						id="linkExcluir" >
-						<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
-					</h:commandLink>
-					</h:column>
+						<h:column>
+						<span class="btn-group col-md-3 col-md-offset-9" role="group">
+						<h:commandLink outcome="responsavelCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+							<f:param name="id" value="#{responsavel.id}" />
+							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
+						</h:commandLink>
+	
+						<h:commandLink class="btn btn-default" aria-label="Left Align"
+							action="#{responsavelBean.excluir(responsavel.id)}"
+							id="linkExcluir" >
+							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+						</h:commandLink>
+						</span>
+						</h:column>
 				</h:dataTable>
 			</h:form>
 		</ui:define>
