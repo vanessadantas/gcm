@@ -2,7 +2,7 @@ package gcm.dominio;
 
 public enum Ambiente {
 	
-DESENVOLVIMENTO("Desenvolvimento"), TESTE("Teste"), HOMOLOGOCAO("Homologação"), PRODUCAO("Produção");
+DESENVOLVIMENTO("Desenvolvimento"), TESTE("Teste"), HOMOLOGACAO("Homologação"), PRODUCAO("Produção");
 	
 	public String nome;
 	

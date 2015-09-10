@@ -5,17 +5,86 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head></h:head>
-<!--  -->
 <h:body>
 
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-			<div>
-				<h2>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome} </h2>
-				<h3>#{sistemaBean.sistema.arquitetura.descricao} </h3>
-				Arquitetura: #{sistemaBean.sistema.arquitetura.nome} <br />
-				Frameworks: #{sistemaBean.sistema.arquitetura.frameworks} <br />
-				Responsáveis: #{sistemaBean.sistema.responsaveis}
+			<div class="col-md-offset-1">
+				<h2>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome}
+				</h2>
+				<dl class="dl-horizontal">
+					<dt>URL</dt>
+					<dd>#{sistemaBean.sistema.url}</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt>Situa&ccedil;&atilde;o</dt>
+					<dd>#{sistemaBean.sistema.situacao.nome}</dd>
+				</dl>
+
+				<dl class="dl-horizontal">
+					<dt>Arquitetura</dt>
+					<dd>
+						#{sistemaBean.sistema.arquitetura.nome} <br />
+						#{sistemaBean.sistema.arquitetura.descricao}
+					</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt>Frameworks</dt>
+					<dd>
+						<ui:repeat
+							value="#{sistemaBean.sistema.arquitetura.frameworks.toArray()}"
+							var="fw">
+							<h:outputText value="#{fw.nome}" />
+							<br />
+						</ui:repeat>
+					</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt>Respons&aacute;veis</dt>
+					<dd>
+						<ui:repeat var="responsavel"
+							value="#{sistemaBean.sistema.responsaveis.toArray()}">
+							<h:outputText value="#{responsavel.nome}" />
+							<br />
+						</ui:repeat>
+					</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt>Observa&ccedil;&atilde;o</dt>
+					<dd>#{sistemaBean.sistema.observacao}</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt>&Uacute;ltimos deploys</dt>
+					<dd>
+						Produ&ccedil;&atilde;o:
+							<h:outputText value="vers&atilde;o #{sistemaBean.ultimoDeployProducao.versao} disponibilizada em "
+								rendered="#{sistemaBean.ultimoDeployProducao != null}"/> 
+							<h:outputText value="#{sistemaBean.ultimoDeployProducao.dataDeploy}" >
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+							</h:outputText>
+							<h:outputText value="nenhum deploy nesse ambiente "
+								rendered="#{sistemaBean.ultimoDeployProducao == null}"/> 
+						    <br/>
+						Homologa&ccedil;&atilde;o: 
+							<h:outputText value="vers&atilde;o #{sistemaBean.ultimoDeployHomologacao.versao} disponibilizada em " 
+								rendered="#{sistemaBean.ultimoDeployHomologacao != null}"/>  
+							<h:outputText value="#{sistemaBean.ultimoDeployHomologacao.dataDeploy}" >
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+							</h:outputText> 
+							<h:outputText value="nenhum deploy nesse ambiente "
+								rendered="#{sistemaBean.ultimoDeployHomologacao == null}"/> 
+							<br/>
+						Teste: 
+							<h:outputText value="vers&atilde;o #{sistemaBean.ultimoDeployTeste.versao} disponibilizada em " 
+								rendered="#{sistemaBean.ultimoDeployTeste != null}"/>  
+							<h:outputText value="#{sistemaBean.ultimoDeployTeste.dataDeploy}" >
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+							</h:outputText>
+							<h:outputText value="nenhum deploy nesse ambiente "
+								rendered="#{sistemaBean.ultimoDeployTeste == null}"/> 
+					</dd>
+				</dl>
+
 			</div>
 		</ui:define>
 	</ui:composition>

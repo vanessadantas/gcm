@@ -1,10 +1,13 @@
 package gcm.web;
 
 import gcm.aplicacao.CrudService;
+import gcm.dominio.Ambiente;
 import gcm.dominio.Arquitetura;
+import gcm.dominio.Deploy;
 import gcm.dominio.Linguagem;
 import gcm.dominio.Responsavel;
 import gcm.dominio.Sistema;
+import gcm.dominio.SituacaoSistema;
 import gcm.infra.CrudServiceImpl;
 
 import java.util.ArrayList;
@@ -37,56 +40,6 @@ public class SistemaBean {
 	public CrudService<Arquitetura> crudServiceArquitetura = new CrudServiceImpl<>(Arquitetura.class);
 	public CrudService<Responsavel> crudServiceResponsavel = new CrudServiceImpl<>(Responsavel.class);
 		
-	
-	// preencher os valos da combobox de arquitetura
-	public void pesquisarArquitetura() {
-		if (linguagemSelecionada != "") {
-			Map<String, Object> parametros = new HashMap<>();
-			parametros.put("linguagem", Linguagem.valueOf(linguagemSelecionada));
-			arquiteturas = crudServiceArquitetura.pesquisarPorNamedQuery(Arquitetura.PESQUISAR_POR_LINGUAGEM,parametros);
-		}
-	}
-	// preencher os valos da combobox de responsável
-
-	public void listarResponsaveis() {
-		responsaveis = crudServiceResponsavel.pesquisarPorNamedQuery(Responsavel.LISTAR_TODOS);
-	}
-
-	// selecionar responsável da combobox
-	public void adicionarResponsavel(){
-		responsaveisSelecionados.add(responsavelSelecionado);
-		System.out.println(responsaveisSelecionados);
-	}
-
-	// remover responsável da lista
-	public void removerResponsavel(Responsavel responsavel) {
-		responsaveisSelecionados.remove(responsavel);
-	}
-
-	// Usado para cadastro
-	public String salvar() {
-		sistema.getResponsaveis().clear();
-		sistema.getResponsaveis().addAll(responsaveisSelecionados);
-		crudService.salvar(sistema);
-		FacesMessage msg = new FacesMessage("Sistema cadastrado com sucesso");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-		return "sistemaLista.jsf?faces-redirect=true";
-	}
-
-	// Usado para pesquisar
-	public String pesquisarSistema() {
-		Map<String, Object> parametros = new HashMap<>();
-		parametros.put("nome", "%" + nomeSistema.toUpperCase() + "%");
-		sistemas = crudService.pesquisarPorNamedQuery(Sistema.PESQUISAR_POR_NOME, parametros);
-		if (sistemas.isEmpty()) {
-			FacesMessage msg = new FacesMessage("Não foi encontrado sistema");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
-		return "sucesso";
-	}
-
-	// Usado para alterar
 	public SistemaBean() {
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap();
@@ -101,16 +54,65 @@ public class SistemaBean {
 			responsaveisSelecionados.addAll(sistema.getResponsaveis());
 			pesquisarArquitetura();
 		}
-			listarResponsaveis();
-		
+		listarResponsaveis();
 	}
 
-	// método de exclusão
+	public void pesquisarArquitetura() {
+		if (linguagemSelecionada != "") {
+			Map<String, Object> parametros = new HashMap<>();
+			parametros.put("linguagem", Linguagem.valueOf(linguagemSelecionada));
+			arquiteturas = crudServiceArquitetura.pesquisarPorNamedQuery(Arquitetura.PESQUISAR_POR_LINGUAGEM,parametros);
+		}
+	}
+
+	public void listarResponsaveis() {
+		responsaveis = crudServiceResponsavel.pesquisarPorNamedQuery(Responsavel.LISTAR_TODOS);
+	}
+
+	public void adicionarResponsavel(){
+		responsaveisSelecionados.add(responsavelSelecionado);
+		System.out.println(responsaveisSelecionados);
+	}
+
+	public void removerResponsavel(Responsavel responsavel) {
+		responsaveisSelecionados.remove(responsavel);
+	}
+
+	public String salvar() {
+		sistema.getResponsaveis().clear();
+		sistema.getResponsaveis().addAll(responsaveisSelecionados);
+		crudService.salvar(sistema);
+		FacesMessage msg = new FacesMessage("Sistema cadastrado com sucesso");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		return "sistemaLista.jsf?faces-redirect=true";
+	}
+
+	public String pesquisarSistema() {
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("nome", "%" + nomeSistema.toUpperCase() + "%");
+		sistemas = crudService.pesquisarPorNamedQuery(Sistema.PESQUISAR_POR_NOME, parametros);
+		if (sistemas.isEmpty()) {
+			FacesMessage msg = new FacesMessage("Não foi encontrado sistema");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		return "sucesso";
+	}
+
 	public void excluir(Long idSistema) {
 		crudService.excluir(idSistema);
 		pesquisarSistema();
 	}
 
+	public Deploy getUltimoDeployProducao() {
+		return sistema.getUltimoDeploy(Ambiente.PRODUCAO);
+	}
+	public Deploy getUltimoDeployHomologacao() {
+		return sistema.getUltimoDeploy(Ambiente.HOMOLOGACAO);
+	}
+	public Deploy getUltimoDeployTeste() {
+		return sistema.getUltimoDeploy(Ambiente.TESTE);
+	}
 	public Sistema getSistema() {
 		return sistema;
 	}
@@ -129,6 +131,10 @@ public class SistemaBean {
 
 	public List<Linguagem> getLinguagens() {
 		return Arrays.asList(Linguagem.values());
+	}
+
+	public List<SituacaoSistema> getSituacoes() {
+		return Arrays.asList(SituacaoSistema.values());
 	}
 
 	public String getNomeArquitetura() {

@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Deploy {
+public class Deploy implements Comparable<Deploy> {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -23,6 +23,11 @@ public class Deploy {
 		return ambiente + ", " + versao + ", " + dataDeploy;
 	}
 
+	@Override
+	public int compareTo(Deploy outro) {
+		return this.dataDeploy.compareTo(outro.getDataDeploy());
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
