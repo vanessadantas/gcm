@@ -1,11 +1,16 @@
 package gcm.dominio;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -42,7 +47,9 @@ public class Sistema {
 	@Column
 	private String sigla;
 	@Column
-	private String url;	
+	private String url;
+	@Enumerated(EnumType.STRING)
+	private SituacaoSistema situacao;
 	@ManyToMany
 	private Set<Responsavel> responsaveis = new HashSet<>();
 	@OneToOne
@@ -51,12 +58,36 @@ public class Sistema {
 	private Set<Sistema> dependencias;
 	@Column
 	private String observacao;	
+	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="sistema_id")
-	private Set<Deploy> deploys = new HashSet<>();
+	private List<Deploy> deploys = new ArrayList<>();
 	
 	public void adicionarDeploy(Deploy deploy) {
 		deploys.add(deploy);
+	}
+
+	public List<Deploy> getDeploysOrdenadosPorData() {
+		List<Deploy> deploysOrdenados = new ArrayList<Deploy>();
+		deploysOrdenados.addAll(deploys);
+		Collections.sort(deploysOrdenados);
+		return deploysOrdenados;
+	}
+	
+	public List<Deploy> getDeploysOrdenadosPorDataDecresecente() {
+		List<Deploy> deploysOrdenados = getDeploysOrdenadosPorData();
+		Collections.reverse(deploysOrdenados);
+		return deploysOrdenados;
+	}
+	
+	public Deploy getUltimoDeploy(Ambiente ambiente) {
+		List<Deploy> deploys = getDeploysOrdenadosPorDataDecresecente();
+		for (Deploy deploy : deploys) {
+			if (deploy.getAmbiente().equals(ambiente)) {
+				return deploy;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -165,31 +196,31 @@ public class Sistema {
 	public void setArquitetura(Arquitetura arquitetura) {
 		this.arquitetura = arquitetura;
 	}
-	
 	public Set<Sistema> getDependencias() {
 		return dependencias;
 	}
 	public void setDependencias(Set<Sistema> dependencias) {
 		this.dependencias = dependencias;
 	}
-
 	public String getUrl() {
 		return url;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public String getObservacao() {
 		return observacao;
 	}
-
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-
-	public Set<Deploy> getDeploys() {
+	public List<Deploy> getDeploys() {
 		return deploys;
+	}
+	public SituacaoSistema getSituacao() {
+		return situacao;
+	}
+	public void setSituacao(SituacaoSistema situacao) {
+		this.situacao = situacao;
 	}
 }

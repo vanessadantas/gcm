@@ -8,8 +8,6 @@
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-
-			<h:messages styleClass="alert alert-success"/>
 			<h:form id="formPesquisa" prependId="false">
 				<div class="container row form-group">
 					<label class="control-label col-xs-3">Pesquisar Sistema</label>
@@ -33,25 +31,32 @@
 		
 		
 			<h:form id="formResultado">
-				<h:dataTable value="#{sistemaBean.sistemas}" var="sistema">
-					<h:column>
-					<h:link value="detalhes" outcome="sistemaDetalhes.jsf">
-					<f:param name="id" value="#{sistema.id}" />
-						#{sistema.nome}	
-						</h:link>			
-					</h:column>
-					<h:column>
-						<h:link value="alterar" outcome="sistemaCadastro.jsf">
-							<f:param name="id" value="#{sistema.id}" />
-						</h:link>
-		
-					</h:column>
-					<h:column>
-						<h:commandLink value="excluir"
-							action="#{sistemaBean.excluir(sistema.id)}"
-							id="linkExcluir" />
-					</h:column>
-				</h:dataTable>
+				<ui:repeat value="#{sistemaBean.sistemas}" var="sistema">
+					<div class="row">
+						<span class="col-md-5 col-md-offset-1" role="group">
+							<h:link outcome="sistemaDetalhes.jsf">
+								<f:param name="id" value="#{sistema.id}" />
+								<h:outputText value="#{sistema.sigla}" /> -
+								<h:outputText value="#{sistema.nome}" />  
+							</h:link>
+						</span>
+									
+						<span class="btn-group col-md-3 col-md-offset-3" role="group">
+							<h:link outcome="sistemaCadastro.jsf" class="btn btn-default" aria-label="Left Align">
+								<f:param name="id" value="#{sistema.id}" />
+								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
+							</h:link>
+				
+							<h:commandLink 
+								onclick="if (! confirm('Deseja realmente excluir o item?')) return false" 
+								class="btn btn-default" aria-label="Left Align"
+								action="#{sistemaBean.excluir(sistema.id)}"
+								id="linkExcluir">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
+							</h:commandLink>
+						</span>
+					</div>
+				</ui:repeat>
 			</h:form>
 		</ui:define>
 	</ui:composition>

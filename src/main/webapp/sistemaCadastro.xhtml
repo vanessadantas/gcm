@@ -9,8 +9,6 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form styleClass="form-horizontal">
-				<h:messages />
-
 				<div class="form-group">
 					<label class="control-label col-xs-2">Nome</label>
 					<div class="col-xs-6">
@@ -67,6 +65,23 @@
 						</h:selectOneMenu>
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label class="control-label col-xs-2">Situa&ccedil;&atilde;o</label>
+					<div class="col-xs-6">
+						<h:selectOneMenu value="#{sistemaBean.sistema.situacao}"
+							id="comboSituacao" label="Situa&ccedil;&atilde;o" required="true"
+							styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione a situa&ccedil;&atilde;o --" />
+							<f:selectItems value="#{sistemaBean.situacoes}"
+								var="situacao" itemLabel="#{situacao.nome}"
+								itemValue="#{situacao}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+
+
 				<div class="form-group">
 					<label class="control-label col-xs-2">Responsável</label>
 					<div class="col-xs-5">
