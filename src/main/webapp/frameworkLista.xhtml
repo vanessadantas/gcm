@@ -21,7 +21,7 @@
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
 						</h:commandLink>
 						<h:link outcome="frameworkCadastro.jsf" styleClass="btn btn-default">
-							<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Nova Ferramenta
+							<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> Novo Framework
 						</h:link>
 						</span>
 					</div>
@@ -29,12 +29,11 @@
 			</h:form>
 
 			<h:form id="formResultado">
-				<h:dataTable value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
-					<h:column>
-						#{framework.nome}				
-					</h:column>
-					<h:column>
-						<span class="btn-group" role="group">
+				<ui:repeat value="#{frameworkBean.frameworks}" var="framework" styleClass="table">
+						<span class="col-md-3 col-md-offset-1">
+							#{framework.nome}				
+						</span>
+						<span class="btn-group col-md-3 col-md-offset-5" role="group">
 							<h:commandLink action="frameworkCadastro.jsf" class="btn btn-default" aria-label="Left Align">
 								<f:param name="id" value="#{framework.id}" />
 								<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Alterar
@@ -48,8 +47,7 @@
 								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Excluir
 							</h:commandLink>
 						</span>
-					</h:column>
-				</h:dataTable>
+					</ui:repeat>
 			</h:form>
 		</ui:define>
 	</ui:composition>

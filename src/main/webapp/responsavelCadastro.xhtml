@@ -10,12 +10,31 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form styleClass="form-horizontal">
+			<h2 class="col-xs-offset-1">Cadastro - Respons&aacute;vel</h2>	
+			
+				<div class="form-group">
+					<label class="control-label col-xs-2">Nome</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{responsavelBean.responsavel.nome}" maxlength="100"
+							label="Nome" required="true" styleClass="form-control" />
+					</div>
+				</div>
 
-				<gcm:input label="Nome" value="#{responsavelBean.responsavel.nome}" id="inputNome"/>
-				<gcm:input label="Área" value="#{responsavelBean.responsavel.area}" id="inputArea"/>
-				<gcm:input label="E-mail" value="#{responsavelBean.responsavel.email}" id="inputEmail"/>
-				<gcm:input label="" value="#{responsavelBean.responsavel.}" id="input"/>
+				<div class="form-group">
+					<label class="control-label col-xs-2">Área</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{responsavelBean.responsavel.area}" label="Área" maxlength="50"
+						 	required="true" styleClass="form-control" />
+					</div>
+				</div>
 					
+				<div class="form-group">
+					<label class="control-label col-xs-2">E-mail</label>
+					<div class="col-xs-6">			
+						<h:inputText value="#{responsavelBean.responsavel.email}" label="E-mail" maxlength="200"
+							styleClass="form-control" />
+					</div>
+				</div>								
 				<h:inputHidden value="#{responsavelBean.responsavel.id}"/>
 
 				<div class="form-group">
