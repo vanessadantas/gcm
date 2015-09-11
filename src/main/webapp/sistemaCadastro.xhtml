@@ -3,12 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:gcm="http://java.sun.com/jsf/composite/componentes">
 
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
-			<h:form styleClass="form-horizontal">
+			<h:form styleClass="form-horizontal" prependId="false" >
 				<div class="form-group">
 					<label class="control-label col-xs-2">Nome</label>
 					<div class="col-xs-6">
@@ -36,6 +37,7 @@
 						<h:inputTextarea value="#{sistemaBean.sistema.observacao}" styleClass="form-control"/>
 					</div>
 				</div>
+				
 				<!-- Usa a enumeration Linguagem para preencher a combobox -->
 				<div class="form-group">
 					<label class="control-label col-xs-2">Linguagem</label>
@@ -51,11 +53,14 @@
 						</h:selectOneMenu>
 					</div>
 				</div>
+
 				<div class="form-group">
 					<label class="control-label col-xs-2">Arquitetura</label>
 					<div class="col-xs-6">
 						<h:selectOneMenu value="#{sistemaBean.sistema.arquitetura}"
-							id="comboArquitetura" label="Arquitetura" required="true"
+							id="comboArquitetura" 
+							label="Arquitetura" 
+							required="true"
 							styleClass="form-control">
 							<f:selectItem noSelectionOption="true"
 								itemLabel="-- Selecione a arquitetura --" />

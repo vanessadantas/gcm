@@ -7,18 +7,19 @@
 
 	<cc:interface>
 		<cc:attribute name="id" required="true"/>
-		<cc:attribute name="label" required="true"/>
-		<cc:attribute name="value" required="true"/>
+		<cc:attribute name="label" default="Salvar"/>
+		<cc:attribute name="action" method-signature="java.lang.String action()" />
 	</cc:interface>
 
 	<cc:implementation>
 		<div class="form-group">
-			<label class="control-label col-xs-2">#{cc.attrs.label}</label>
-			<div class="col-xs-6">
-				<h:inputText id="#{cc.attrs.id}" label="#{cc.attrs.label}" value="#{cc.attrs.value}" 
-				styleClass="form-control"/>
+			<div class="col-xs-offset-2 col-xs-10">
+				<h:commandLink styleClass="btn btn-primary"
+					id="#{cc.attrs.id}"
+					action="#{cc.attrs.action}" >
+					<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>#{cc.attrs.label}
+				</h:commandLink>
 			</div>
 		</div>
 	</cc:implementation>	
-
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<cc:interface>
+		<cc:attribute name="id" required="true"/>
+		<cc:attribute name="label" required="true"/>
+		<cc:attribute name="value" required="true"/>
+		
+		<cc:attribute name="opcoes" required="true"/>
+		<cc:attribute name="labelPrimeiraLinha" />
+
+		<cc:attribute name="ajaxRender" />
+		<cc:attribute name="ajaxListener" method-signature="java.util.Collection action()"/>		
+	</cc:interface>
+
+	<cc:implementation>
+
+		<div class="form-group">
+			<label class="control-label col-xs-2">#{cc.attrs.label}</label>
+			<div class="col-xs-6">
+				<h:selectOneMenu value="#{cc.attrs.value}"
+					label="#{cc.attrs.label}" 
+					required="true" styleClass="form-control">
+					<f:selectItem noSelectionOption="true" itemLabel="#{cc.attrs.labelPrimeiraLinha}" />
+					
+					<f:selectItems 
+						value="#{cc.attrs.opcoes}" 
+						var="opcao"
+						itemLabel="#{opcao.nome}" 
+						itemValue="#{opcao}" />
+					<f:ajax listener="#{cc.attrs.ajaxListener}" render="#{cc.attrs.ajaxRender}" />
+				</h:selectOneMenu>
+			</div>
+		</div>
+		
+		
+<!-- 
+				<gcm:comboEnum id="comboLinguagem" 
+					label="Linguagem" 
+					value="#{sistemaBean.linguagemSelecionada}"
+					opcoes="#{sistemaBean.linguagens}" 
+					labelPrimeiraLinha="-- Selecione a linguagem --" 
+					ajaxRender="comboArquitetura" ajaxListener="#{sistemaBean.pesquisarArquitetura()}">
+				</gcm:comboEnum>
+
+ -->		
+	</cc:implementation>
+</html>			
