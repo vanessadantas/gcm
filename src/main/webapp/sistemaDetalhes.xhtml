@@ -10,8 +10,7 @@
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<div class="col-md-offset-1">
-				<h2>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome}
-				</h2>
+				<h2>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome}</h2>
 				<dl class="dl-horizontal">
 					<dt>URL</dt>
 					<dd>#{sistemaBean.sistema.url}</dd>
@@ -82,6 +81,12 @@
 							</h:outputText>
 							<h:outputText value="nenhum deploy nesse ambiente "
 								rendered="#{sistemaBean.ultimoDeployTeste == null}"/> 
+							<br />
+							
+							<h:link outcome="deployHistorico.jsf" value="ver hist&oacute;rico de deploys">
+								<f:param name="id" value="#{sistemaBean.sistema.id}" />
+							</h:link>
+							 
 					</dd>
 				</dl>
 
