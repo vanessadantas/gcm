@@ -7,28 +7,50 @@
 
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
-	<h2 class="col-xs-offset-1">Cadastro - Framework</h2>	
 		<ui:define name="conteudo">
-			<h:form>
-				<h:panelGrid columns="2" styleClass="table">			
-					Nome
-					<h:inputText value="#{frameworkBean.framework.nome}" label="Nome" required="true" maxlength="100"/>			
-					URL
-					<h:inputText value="#{frameworkBean.framework.url}" label="URL" maxlength="200"/>
-						
-					<!-- Usa a enumeration Linguagem para preencher a combobox -->		
-					Linguagem
-					<h:selectOneMenu value="#{frameworkBean.framework.linguagem}" label="Linguagem" required="true"> 
-						<f:selectItem noSelectionOption="true" itemLabel="-- Selecione a linguagem --"/>
-						<f:selectItems value="#{frameworkBean.linguagens}" var="linguagem" itemLabel="#{linguagem.nome}" itemValue="#{linguagem}" />
-					</h:selectOneMenu>
-					<h:inputHidden value="#{frameworkBean.framework.id}"/>
-		
-					<h:commandLink styleClass="btn btn-primary"
-					action="#{frameworkBean.salvar()}">
-					<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
-					</h:commandLink>
-				</h:panelGrid>
+			<h:form styleClass="form-horizontal" prependId="false">
+				<h2 class="col-xs-offset-1">Cadastro - Framework</h2>
+					<div class="form-group">
+						<label class="control-label col-xs-2">Nome</label>
+						<div class="col-xs-6">
+							<h:inputText value="#{frameworkBean.framework.nome}" label="Nome"
+							required="true" maxlength="100" styleClass="form-control" />
+						</div>
+					</div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Url</label>
+					<div class="col-xs-6">
+						<h:inputText value="#{frameworkBean.framework.url}" label="URL" styleClass="form-control" 
+							maxlength="200" />
+					</div>
+				</div>
+
+				<!-- Usa a enumeration Linguagem para preencher a combobox -->
+				<div class="form-group">
+					<label class="control-label col-xs-2">Linguagem</label>
+					<div class="col-xs-6">
+						<h:selectOneMenu value="#{frameworkBean.framework.linguagem}" styleClass="form-control" 
+							label="Linguagem" required="true">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione a linguagem --" />
+							<f:selectItems value="#{frameworkBean.linguagens}"
+								var="linguagem" itemLabel="#{linguagem.nome}"
+								itemValue="#{linguagem}" />
+						</h:selectOneMenu>
+							<h:inputHidden value="#{frameworkBean.framework.id}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-offset-2 col-xs-10">
+						<h:commandLink styleClass="btn btn-primary"
+							action="#{frameworkBean.salvar()}">
+							<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+						</h:commandLink>
+					</div>
+				</div>
+				
 			</h:form>
 		</ui:define>
 	</ui:composition>
