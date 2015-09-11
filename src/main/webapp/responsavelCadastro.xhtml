@@ -3,39 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:gcm="http://java.sun.com/jsf/composite/componentes">
 
 <h:body>
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
 			<h:form styleClass="form-horizontal">
-				<h:messages styleClass="alert alert-success col-xs-10"/>
 
-				<div class="form-group">
-					<label class="control-label col-xs-2">Nome</label>
-					<div class="col-xs-6">			
-						<h:inputText value="#{responsavelBean.responsavel.nome}" 
-							label="Nome" styleClass="form-control" />
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="control-label col-xs-2">Área</label>
-					<div class="col-xs-6">			
-						<h:inputText value="#{responsavelBean.responsavel.area}" label="Área" 
-							styleClass="form-control" />
-					</div>
-				</div>
-					
-				<div class="form-group">
-					<label class="control-label col-xs-2">E-mail</label>
-					<div class="col-xs-6">			
-						<h:inputText value="#{responsavelBean.responsavel.email}" label="E-mail" 
-							styleClass="form-control" />
-					</div>
-				</div>								
+				<gcm:input label="Nome" value="#{responsavelBean.responsavel.nome}" id="inputNome"/>
+				<gcm:input label="Área" value="#{responsavelBean.responsavel.area}" id="inputArea"/>
+				<gcm:input label="E-mail" value="#{responsavelBean.responsavel.email}" id="inputEmail"/>
+				<gcm:input label="" value="#{responsavelBean.responsavel.}" id="input"/>
 					
 				<h:inputHidden value="#{responsavelBean.responsavel.id}"/>
+
 				<div class="form-group">
         			<div class="col-xs-offset-2 col-xs-10">
         				<h:commandLink styleClass="btn btn-primary"
