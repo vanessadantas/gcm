@@ -2,6 +2,7 @@ package gcm.dominio;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,22 +55,46 @@ public class Sistema {
 	private Set<Responsavel> responsaveis = new HashSet<>();
 	@OneToOne
 	private Arquitetura arquitetura;	
-	@Transient
-	private Set<Sistema> dependencias;
 	@Column
 	private String observacao;	
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@JoinColumn(name="sistema_id")
-	private List<Deploy> deploys = new ArrayList<>();
+	private List<Release> releases = new ArrayList<>();
 	
-	public void adicionarDeploy(Deploy deploy) {
-		deploys.add(deploy);
+	@Transient
+	private List<Deploy> deploys;
+	@Transient
+	private Set<PontoIntegracao> dependencias;
+	@Transient
+	private Set<PontoIntegracao> pontosIntegracao;
+	
+	
+	public void adicionarRelease(Release release) {
+		releases.add(release);
+	}
+	
+	public List<Deploy> getDeploys() {
+		if (deploys == null) {
+			deploys = new ArrayList<>();
+			for (Release release : releases) {
+				for (Date data : release.getDeploysProducao()) {
+					deploys.add(new Deploy(release.getNumero(), Ambiente.PRODUCAO, data));
+				}
+				for (Date data : release.getDeploysHomologacao()) {
+					deploys.add(new Deploy(release.getNumero(), Ambiente.HOMOLOGACAO, data));
+				}
+				for (Date data : release.getDeploysTeste()) {
+					deploys.add(new Deploy(release.getNumero(), Ambiente.TESTE, data));
+				}
+			}
+		}
+		return deploys;
 	}
 
 	public List<Deploy> getDeploysOrdenadosPorData() {
 		List<Deploy> deploysOrdenados = new ArrayList<Deploy>();
-		deploysOrdenados.addAll(deploys);
+		deploysOrdenados.addAll(getDeploys());
 		Collections.sort(deploysOrdenados);
 		return deploysOrdenados;
 	}
@@ -196,12 +221,6 @@ public class Sistema {
 	public void setArquitetura(Arquitetura arquitetura) {
 		this.arquitetura = arquitetura;
 	}
-	public Set<Sistema> getDependencias() {
-		return dependencias;
-	}
-	public void setDependencias(Set<Sistema> dependencias) {
-		this.dependencias = dependencias;
-	}
 	public String getUrl() {
 		return url;
 	}
@@ -214,13 +233,13 @@ public class Sistema {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-	public List<Deploy> getDeploys() {
-		return deploys;
-	}
 	public SituacaoSistema getSituacao() {
 		return situacao;
 	}
 	public void setSituacao(SituacaoSistema situacao) {
 		this.situacao = situacao;
+	}
+	public List<Release> getReleases() {
+		return releases;
 	}
 }

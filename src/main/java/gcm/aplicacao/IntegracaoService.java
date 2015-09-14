@@ -1,7 +1,7 @@
 package gcm.aplicacao;
 
 import gcm.dominio.Ambiente;
-import gcm.dominio.Deploy;
+import gcm.dominio.Release;
 import gcm.dominio.Sistema;
 import gcm.infra.JPAUtil;
 
@@ -18,27 +18,45 @@ import javax.ws.rs.core.Response;
 @Path("/integracao")
 public class IntegracaoService {
 
-	EntityManager em = JPAUtil.getEntityManager();
-	Sistema sistema;
-	Ambiente ambiente;
-	String mensagens = "";
+	private EntityManager em = JPAUtil.getEntityManager();
+	private Sistema sistema;
+	private Ambiente ambiente;
+	private Release release;
+	private String mensagens = "";
+	
+	@GET
+	@Path("/registrarRelease/{siglaSistema}/{versao}")
+	public Response registrarRelease(@PathParam("siglaSistema") String siglaSistema, 
+								@PathParam("versao")String versao) {
+		if ( !carregarSistema(siglaSistema)) {
+			return Response.status(Response.Status.BAD_REQUEST).entity("Erro - " + mensagens).build();			
+		}
+		Release release = new Release();
+		release.setDataCriacao(new Date());
+		release.setNumero(versao);
+		sistema.adicionarRelease(release);
+		em.merge(sistema);
+		return Response.status(Response.Status.CREATED).entity("Ok").build();
+	}
 	
 	@GET
 	@Path("/registrarDeploy/{siglaSistema}/{versao}/{ambiente}")
 	public Response registrarDeploy(@PathParam("siglaSistema") String siglaSistema, 
 								@PathParam("versao")String versao, 
 								@PathParam("ambiente") String ambiente) {
-
-		if ( !carregarSistema(siglaSistema) || !carregarAmbiente(ambiente)) {
+		if ( !carregarSistema(siglaSistema) | !carregarAmbiente(ambiente) | !carregarRelease(versao)) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Erro - " + mensagens).build();			
 		}
 		
-		Deploy deploy = new Deploy();
-		deploy.setAmbiente(this.ambiente);
-		deploy.setVersao(versao);
-		deploy.setDataDeploy(new Date());
-		sistema.adicionarDeploy(deploy);
+		if (this.ambiente.equals(Ambiente.PRODUCAO)) {
+			release.adicionarDeployProducao();
+		} else if (this.ambiente.equals(Ambiente.HOMOLOGACAO)) {
+			release.adicionarDeployHomologacao();
+		} else if (this.ambiente.equals(Ambiente.TESTE)) {
+			release.adicionarDeployTeste();
+		}
 		
+		sistema.adicionarRelease(release);		
 		em.merge(sistema);
 		return Response.status(Response.Status.CREATED).entity("Ok").build();
 	}
@@ -65,6 +83,19 @@ public class IntegracaoService {
 			mensagens = mensagens + "O ambiente informado não é válido. ";
 			return false;
 		}
+	}
+	
+	private boolean carregarRelease(String versao) {
+		if (sistema != null) {
+			for (Release release : sistema.getReleases()) {
+				if (release.getNumero().equalsIgnoreCase(versao)) {
+					this.release = release;
+					return true;
+				}
+			}
+		}
+		mensagens = mensagens + "Nenhuma release encontrada com o número informado. ";
+		return false;
 	}
 	
 }

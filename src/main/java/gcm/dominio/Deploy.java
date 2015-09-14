@@ -2,22 +2,21 @@ package gcm.dominio;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
-public class Deploy implements Comparable<Deploy> {
-	@Id
-	@GeneratedValue
-	private Long id;
-	@Enumerated(EnumType.STRING)
+/**
+ * Value Object que representa o deploy de uma release de sistema em um ambiente.  
+ *
+ */
+public final class Deploy implements Comparable<Deploy> {
 	private Ambiente ambiente;
 	private String versao;
 	private Date dataDeploy;
-
+	
+	public Deploy(String versao, Ambiente ambiente, Date dataDeploy) {
+		this.versao = versao;
+		this.ambiente = ambiente;
+		this.dataDeploy = dataDeploy;
+	}
+	
 	@Override
 	public String toString() {
 		return ambiente + ", " + versao + ", " + dataDeploy;
@@ -25,51 +24,9 @@ public class Deploy implements Comparable<Deploy> {
 
 	@Override
 	public int compareTo(Deploy outro) {
-		return this.dataDeploy.compareTo(outro.getDataDeploy());
+		return this.dataDeploy.compareTo(outro.dataDeploy);
 	}
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((ambiente == null) ? 0 : ambiente.hashCode());
-		result = prime * result
-				+ ((dataDeploy == null) ? 0 : dataDeploy.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((versao == null) ? 0 : versao.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Deploy other = (Deploy) obj;
-		if (ambiente != other.ambiente)
-			return false;
-		if (dataDeploy == null) {
-			if (other.dataDeploy != null)
-				return false;
-		} else if (!dataDeploy.equals(other.dataDeploy))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (versao == null) {
-			if (other.versao != null)
-				return false;
-		} else if (!versao.equals(other.versao))
-			return false;
-		return true;
-	}
-
 	public Ambiente getAmbiente() {
 		return ambiente;
 	}
@@ -82,15 +39,8 @@ public class Deploy implements Comparable<Deploy> {
 		return versao;
 	}
 
-	public void setVersao(String versao) {
-		this.versao = versao;
-	}
-
 	public Date getDataDeploy() {
 		return dataDeploy;
 	}
-
-	public void setDataDeploy(Date dataDeploy) {
-		this.dataDeploy = dataDeploy;
-	}
+	
 }
