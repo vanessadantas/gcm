@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<div class="col-md-offset-1">
+				<h3>Hist&oacute;rico de deploys</h3>
+				<h:form>
+				<div class="container form-group">
+					<div class="input-group col-xs-9">
+						<label class="control-label">Início</label>
+						<h:inputText id="inicio" value="#{deploysBean.inicio}" styleClass="form-control"/>
+						
+						<label class="control-label">Fim</label>
+						<h:inputText id="fim" value="#{deploysBean.fim}" styleClass="form-control"/>
+					</div>
+				</div>
+				</h:form>
+				<div class="container row">
+					<div class="col-md-2">
+						Data
+					</div>
+					<div class="col-md-2">
+						Produção
+					</div>
+					<div class="col-md-2">
+						Homologação
+					</div>
+					<div class="col-md-2">
+						Teste
+					</div>
+				</div>
+				
+				
+				<ui:repeat var="deploy" value="#{deploysBean.deploys}">
+					<div class="container row">
+						<div class="col-md-2">
+							<h:outputText value="#{deploy.dataDeploy}" >
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</div>
+						<div class="col-md-2">
+							<h:outputText value="#{deploy.siglaSistema} - #{deploy.versao}" rendered="#{deploy.ambiente == 'PRODUCAO'}" />
+						</div>
+	
+						<div class="col-md-2">
+							<h:outputText value="#{deploy.siglaSistema} - #{deploy.versao}" rendered="#{deploy.ambiente == 'HOMOLOGACAO'}" />
+						</div>
+							
+						<div class="col-md-2">
+							<h:outputText value="#{deploy.siglaSistema} - #{deploy.versao}" rendered="#{deploy.ambiente == 'TESTE'}" />
+						</div>
+					</div>
+				</ui:repeat>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

@@ -30,16 +30,23 @@ import javax.persistence.Transient;
 @Entity
 @NamedQueries({
 	@NamedQuery(name=Sistema.PESQUISAR_POR_NOME, 
-				query="select s from Sistema s where upper(s.nome) like :nome order by s.nome"),
+		query="select s from Sistema s where upper(s.nome) like :nome order by s.nome"),
 	@NamedQuery(name=Sistema.PESQUISAR_POR_SIGLA_EXATA, 
-				query="select s from Sistema s where upper(s.sigla) = :sigla")
-	
+		query="select s from Sistema s where upper(s.sigla) = :sigla"),
+	@NamedQuery(name=Sistema.PESQUISAR_DEPLOYS_POR_PERIODO, 
+		query="select s from Sistema s inner join s.releases r " +
+				"left join r.deploysProducao dp " +
+				"left join r.deploysHomologacao dh " +
+				"left join r.deploysTeste dt " +
+				"where (dp between :inicio and :fim) or " +
+				"(dh between :inicio and :fim) or " +
+				"(dt between :inicio and :fim) ")
 })
 public class Sistema {
 	
 	public static final String PESQUISAR_POR_NOME = "sistema.pesquisarPorNome";
 	public static final String PESQUISAR_POR_SIGLA_EXATA = "sistema.pesquisarPorSiglaExata";
-	
+	public static final String PESQUISAR_DEPLOYS_POR_PERIODO = "sistema.pesquisarDeploysPorPeriodo";
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -79,13 +86,13 @@ public class Sistema {
 			deploys = new ArrayList<>();
 			for (Release release : releases) {
 				for (Date data : release.getDeploysProducao()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.PRODUCAO, data));
+					deploys.add(new Deploy(release.getNumero(), Ambiente.PRODUCAO, data, getSigla()));
 				}
 				for (Date data : release.getDeploysHomologacao()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.HOMOLOGACAO, data));
+					deploys.add(new Deploy(release.getNumero(), Ambiente.HOMOLOGACAO, data, getSigla()));
 				}
 				for (Date data : release.getDeploysTeste()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.TESTE, data));
+					deploys.add(new Deploy(release.getNumero(), Ambiente.TESTE, data, getSigla()));
 				}
 			}
 		}

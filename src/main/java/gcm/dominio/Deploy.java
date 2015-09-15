@@ -10,8 +10,10 @@ public final class Deploy implements Comparable<Deploy> {
 	private Ambiente ambiente;
 	private String versao;
 	private Date dataDeploy;
+	private String siglaSistema;
 	
-	public Deploy(String versao, Ambiente ambiente, Date dataDeploy) {
+	public Deploy(String versao, Ambiente ambiente, Date dataDeploy, String siglaSistema) {
+		this.siglaSistema = siglaSistema;
 		this.versao = versao;
 		this.ambiente = ambiente;
 		this.dataDeploy = dataDeploy;
@@ -41,6 +43,10 @@ public final class Deploy implements Comparable<Deploy> {
 
 	public Date getDataDeploy() {
 		return dataDeploy;
+	}
+
+	public String getSiglaSistema() {
+		return siglaSistema;
 	}
 	
 }
