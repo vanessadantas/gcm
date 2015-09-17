@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head></h:head>
 <h:body>
 
@@ -11,18 +12,29 @@
 		<ui:define name="conteudo">
 			<div class="col-md-offset-1">
 				<h3>Hist&oacute;rico de deploys</h3>
-				<h:form>
-				<div class="container form-group">
-					<div class="input-group col-xs-9">
-						<label class="control-label">Início</label>
-						<h:inputText id="inicio" value="#{deploysBean.inicioPeriodo}" styleClass="form-control"/>
-						
-						<label class="control-label">Fim</label>
-						<h:inputText id="fim" value="#{deploysBean.fimPeriodo}" styleClass="form-control"/>
+				<h:form styleClass="form-inline">
+
+					<label>Pequisar deploys por período</label>
+					<div class="row input-group">
+						<div class="col-xs-4">
+							<h:inputText id="inicioPeriodo" styleClass="form-control"
+								value="#{deploysBean.inicioPeriodo}" a:placeholder="inicio"/>
+						</div>
+						<div class="col-xs-4">
+							<h:inputText id="fimPeriodo" styleClass="form-control"
+								value="#{deploysBean.fimPeriodo}" a:placeholder="fim" />
+						</div>
+						<div class="input-group-btn col-xs-3">
+							<span class="input-group-btn">				
+								<h:commandLink styleClass="btn btn-default" >
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
+								</h:commandLink>
+							</span>
+						</div>
 					</div>
-				</div>
 				</h:form>
-				<div class="container row">
+				
+				<div class="container row" style="padding-top: 30px">
 					<div class="col-md-2">
 						Data
 					</div>
