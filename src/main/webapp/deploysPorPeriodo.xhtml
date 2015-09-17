@@ -15,10 +15,10 @@
 				<div class="container form-group">
 					<div class="input-group col-xs-9">
 						<label class="control-label">Início</label>
-						<h:inputText id="inicio" value="#{deploysBean.inicio}" styleClass="form-control"/>
+						<h:inputText id="inicio" value="#{deploysBean.inicioPeriodo}" styleClass="form-control"/>
 						
 						<label class="control-label">Fim</label>
-						<h:inputText id="fim" value="#{deploysBean.fim}" styleClass="form-control"/>
+						<h:inputText id="fim" value="#{deploysBean.fimPeriodo}" styleClass="form-control"/>
 					</div>
 				</div>
 				</h:form>
@@ -38,23 +38,29 @@
 				</div>
 				
 				
-				<ui:repeat var="deploy" value="#{deploysBean.deploys}">
+				<ui:repeat var="deploysPorDia" value="#{deploysBean.listaDeploysPorDia}">
 					<div class="container row">
 						<div class="col-md-2">
-							<h:outputText value="#{deploy.dataDeploy}" >
+							<h:outputText value="#{deploysPorDia.dia}" >
 								<f:convertDateTime pattern="dd/MM/yyyy"/>
 							</h:outputText>
 						</div>
 						<div class="col-md-2">
-							<h:outputText value="#{deploy.siglaSistema} - #{deploy.versao}" rendered="#{deploy.ambiente == 'PRODUCAO'}" />
+							<ui:repeat var="deployProducao" value="#{deploysPorDia.deploysProducao}">
+								<h:outputText value="#{deployProducao.siglaSistema} - #{deployProducao.versao}" /><br/>
+							</ui:repeat>
 						</div>
 	
 						<div class="col-md-2">
-							<h:outputText value="#{deploy.siglaSistema} - #{deploy.versao}" rendered="#{deploy.ambiente == 'HOMOLOGACAO'}" />
+							<ui:repeat var="deployHomologacao" value="#{deploysPorDia.deploysHomologacao}">
+								<h:outputText value="#{deployHomologacao.siglaSistema} - #{deployHomologacao.versao}" /><br/>
+							</ui:repeat>
 						</div>
 							
 						<div class="col-md-2">
-							<h:outputText value="#{deploy.siglaSistema} - #{deploy.versao}" rendered="#{deploy.ambiente == 'TESTE'}" />
+							<ui:repeat var="deployTeste" value="#{deploysPorDia.deploysTeste}">
+								<h:outputText value="#{deployTeste.siglaSistema} - #{deployTeste.versao}" /><br/>
+							</ui:repeat>
 						</div>
 					</div>
 				</ui:repeat>

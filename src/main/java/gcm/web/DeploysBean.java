@@ -1,5 +1,11 @@
 package gcm.web;
 
+import gcm.aplicacao.CrudService;
+import gcm.dominio.Ambiente;
+import gcm.dominio.Deploy;
+import gcm.dominio.Sistema;
+import gcm.infra.CrudServiceImpl;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,40 +17,29 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeField;
-import org.joda.time.DateTimeFieldType;
-
-import gcm.aplicacao.CrudService;
-import gcm.dominio.Deploy;
-import gcm.dominio.Sistema;
-import gcm.infra.CrudServiceImpl;
+import org.joda.time.DateTimeComparator;
 
 @ManagedBean
 public class DeploysBean {
 	
 	private List<Deploy> deploys = new ArrayList<>();
 	private List<DeploysPorDia> listaDeploysPorDia; 
-	private String inicio;
-	private String fim;
+	private String inicioPeriodo, fimPeriodo;
+	private DateTime inicio, fim;
 	
-	public void iniciar() {
-		pesquisarDeploys();
-		//criarListaDeploysDiasPeriodo(inicio, fim);
-	}
+//	public void iniciar() {
+//		iniciarDatas();
+//		pesquisarDeploys();
+//		criarListaDeploysDias();
+//		carregarListaDeploysDias();
+//	}
 	
 	public void pesquisarDeploys() {
 		CrudService<Sistema> cs = new CrudServiceImpl<Sistema>(Sistema.class);
+		
 		Map<String, Object> parametros = new HashMap<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		 
-		try {
-			Date inicio = sdf.parse("01/09/2015");
-			Date fim = sdf.parse("30/09/2015");
-			parametros.put("inicio", inicio);
-			parametros.put("fim", fim);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		parametros.put("inicio", inicio.toDate());
+		parametros.put("fim", fim.toDate());
 		List<Sistema> sistemas = cs.pesquisarPorNamedQuery(Sistema.PESQUISAR_DEPLOYS_POR_PERIODO, parametros);
 		
 		for (Sistema sistema : sistemas){
@@ -52,16 +47,11 @@ public class DeploysBean {
 		}
 	}
 	
-	public List<DeploysPorDia> criarListaDeploysDiasPeriodo(Date inicio, Date fim) {
-		if (inicio.after(fim)) {
-			throw new IllegalArgumentException("Data de início superior ao fim");
-		}
-		DateTime i = new DateTime(inicio);
-		DateTime f = new DateTime(fim);
-		f = f.plusDays(1);
+	public List<DeploysPorDia> criarListaDeploysDias() {
+		fim = fim.plusDays(1);
 		
 		listaDeploysPorDia = new ArrayList<>();
-		for (DateTime d = i; d. isBefore(f); d=d.plusDays(1)) {
+		for (DateTime d = inicio; d. isBefore(fim); d=d.plusDays(1)) {
 			DeploysPorDia dpd = new DeploysPorDia();
 			dpd.dia = d;
 			listaDeploysPorDia.add(dpd);
@@ -69,38 +59,79 @@ public class DeploysBean {
 		return listaDeploysPorDia;
 	}
 	
-	private void carregarListaDeploysDiasPeriodo() {
-//		for (Deploy deploy : deploys) {
-//			DateTime dataDeploy = new DateTime(deploy.getDataDeploy());
-//			while (dataDeploy.getDayOfMonth() <= )
-//		}
+	public void carregarListaDeploysDias() {
+		for (DeploysPorDia deployPorDia : listaDeploysPorDia) {
+			for (Deploy deploy : deploys) {
+				DateTime dataDeploy = new DateTime(deploy.getDataDeploy());
+				if (DateTimeComparator.getDateOnlyInstance().compare(dataDeploy, deployPorDia.dia) == 0) {
+					if (deploy.getAmbiente().equals(Ambiente.PRODUCAO)){
+						deployPorDia.deploysProducao.add(deploy);
+					}
+					if (deploy.getAmbiente().equals(Ambiente.HOMOLOGACAO)){
+						deployPorDia.deploysHomologacao.add(deploy);
+					}
+					if (deploy.getAmbiente().equals(Ambiente.TESTE)){
+						deployPorDia.deploysTeste.add(deploy);
+					}
+				}
+				continue;
+			}
+		}
 	}
-
+	
 	public class DeploysPorDia {
 		DateTime dia;
 		List<Deploy> deploysProducao = new ArrayList<>();
 		List<Deploy> deploysHomologacao = new ArrayList<>();
 		List<Deploy> deploysTeste = new ArrayList<>();
+		
+		public Date getDia() {return dia.toDate(); }
+		public List<Deploy> getDeploysProducao() { return deploysProducao; }
+		public List<Deploy> getDeploysHomologacao() { return deploysHomologacao; }
+		public List<Deploy> getDeploysTeste() { return deploysTeste; }
 	}
 	
 	
-	public List<Deploy> getDeploys() {
-		return deploys;
+	public void iniciarDatas() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date inicio = sdf.parse(inicioPeriodo);
+			Date fim = sdf.parse(fimPeriodo);
+			
+			this.inicio = new DateTime(inicio);
+			this.fim = new DateTime(fim);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		if (inicio.isAfter(fim)) {
+			throw new IllegalArgumentException("Data de início superior ao fim");
+		}
+	}
+	
+	public String getInicioPeriodo() {
+		return inicioPeriodo;
 	}
 
-	public String getInicio() {
-		return inicio;
+	public void setInicioPeriodo(String inicioPeriodo) {
+		this.inicioPeriodo = inicioPeriodo;
 	}
 
-	public void setInicio(String inicio) {
-		this.inicio = inicio;
+	public String getFimPeriodo() {
+		return fimPeriodo;
 	}
 
-	public String getFim() {
-		return fim;
+	public void setFimPeriodo(String fimPeriodo) {
+		this.fimPeriodo = fimPeriodo;
 	}
 
-	public void setFim(String fim) {
-		this.fim = fim;
+	public List<DeploysPorDia> getListaDeploysPorDia() {
+		inicioPeriodo = "01/09/2015";
+		fimPeriodo = "30/09/2015";
+		iniciarDatas();
+		pesquisarDeploys();
+		criarListaDeploysDias();
+		carregarListaDeploysDias();
+		return listaDeploysPorDia;
 	}
 }

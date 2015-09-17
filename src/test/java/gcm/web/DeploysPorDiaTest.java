@@ -1,49 +1,47 @@
 package gcm.web;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import gcm.web.DeploysBean.DeploysPorDia;
+
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import gcm.web.DeploysBean.DeploysPorDia;
 
 public class DeploysPorDiaTest {
 
 	@Test
 	public void criarListaDeploysDiasPerido() {
 		DeploysBean deploysBean = new DeploysBean();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date inicio = null, fim = null;
-		try {
-			inicio = sdf.parse("11/09/2015");
-			fim = sdf.parse("10/10/2015");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		deploysBean.setInicioPeriodo("11/09/2015");
+		deploysBean.setFimPeriodo("10/10/2015");
+		deploysBean.iniciarDatas();
 		
-		List<DeploysPorDia> deploysPorDia = deploysBean.criarListaDeploysDiasPeriodo(inicio, fim);
+		List<DeploysPorDia> deploysPorDia = deploysBean.criarListaDeploysDias();
 		Assert.assertTrue(deploysPorDia.size() == 30);
 		
 		for (DeploysPorDia d : deploysPorDia) {
-			System.out.println(sdf.format(d.dia));
+			System.out.println(d.dia);
 		}
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void criarListaDeploysDiasPeriodoComDataInicioMaiorQueFim() {
 		DeploysBean deploysBean = new DeploysBean();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date inicio = null, fim = null;
-		try {
-			inicio = sdf.parse("30/09/2015");
-			fim = sdf.parse("01/09/2015");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		deploysBean.setInicioPeriodo("30/09/2015");
+		deploysBean.setFimPeriodo("01/09/2015");
+		deploysBean.iniciarDatas();
+		deploysBean.criarListaDeploysDias();
+	}
+	
+	@Test
+	public void pesquisarDeploys() {
+		DeploysBean deploysBean = new DeploysBean();
+		deploysBean.setInicioPeriodo("01/09/2015");
+		deploysBean.setFimPeriodo("30/09/2015");
+		deploysBean.iniciarDatas();
 		
-		deploysBean.criarListaDeploysDiasPeriodo(inicio, fim);
+		deploysBean.pesquisarDeploys();
+		deploysBean.criarListaDeploysDias();
+		deploysBean.carregarListaDeploysDias();
 	}
 }

@@ -34,7 +34,7 @@ import javax.persistence.Transient;
 	@NamedQuery(name=Sistema.PESQUISAR_POR_SIGLA_EXATA, 
 		query="select s from Sistema s where upper(s.sigla) = :sigla"),
 	@NamedQuery(name=Sistema.PESQUISAR_DEPLOYS_POR_PERIODO, 
-		query="select s from Sistema s inner join s.releases r " +
+		query="select distinct s from Sistema s inner join s.releases r " +
 				"left join r.deploysProducao dp " +
 				"left join r.deploysHomologacao dh " +
 				"left join r.deploysTeste dt " +

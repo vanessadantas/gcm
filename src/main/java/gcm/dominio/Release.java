@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -29,15 +30,15 @@ public class Release {
 	@Transient
 	private Map<SituacaoTesteRelease, Date> historicoSituacaoTeste;
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="DeploysProducao", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysProducao")
 	private Set<Date> deploysProducao = new HashSet<>();
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="DeploysHomologacao", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysHomologacao")
 	private Set<Date> deploysHomologacao = new HashSet<>();
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="DeploysTeste", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysTeste")
 	private Set<Date> deploysTeste = new HashSet<>();
