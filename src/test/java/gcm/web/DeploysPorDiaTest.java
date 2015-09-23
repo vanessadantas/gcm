@@ -14,7 +14,7 @@ public class DeploysPorDiaTest {
 		DeploysBean deploysBean = new DeploysBean();
 		deploysBean.setInicioPeriodo("11/09/2015");
 		deploysBean.setFimPeriodo("10/10/2015");
-		deploysBean.iniciarDatas();
+		deploysBean.isDatasValidas();
 		
 		List<DeploysPorDia> deploysPorDia = deploysBean.criarListaDeploysDias();
 		Assert.assertTrue(deploysPorDia.size() == 30);
@@ -29,7 +29,7 @@ public class DeploysPorDiaTest {
 		DeploysBean deploysBean = new DeploysBean();
 		deploysBean.setInicioPeriodo("30/09/2015");
 		deploysBean.setFimPeriodo("01/09/2015");
-		deploysBean.iniciarDatas();
+		deploysBean.isDatasValidas();
 		deploysBean.criarListaDeploysDias();
 	}
 	
@@ -38,7 +38,7 @@ public class DeploysPorDiaTest {
 		DeploysBean deploysBean = new DeploysBean();
 		deploysBean.setInicioPeriodo("01/09/2015");
 		deploysBean.setFimPeriodo("30/09/2015");
-		deploysBean.iniciarDatas();
+		deploysBean.isDatasValidas();
 		
 		deploysBean.pesquisarDeploys();
 		deploysBean.criarListaDeploysDias();

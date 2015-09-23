@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
@@ -23,7 +25,7 @@ import gcm.infra.CrudServiceImpl;
 public class DeploysBean {
 	
 	private List<Deploy> deploys = new ArrayList<>();
-	private List<DeploysPorDia> listaDeploysPorDia; 
+	private List<DeploysPorDia> listaDeploysPorDia = new ArrayList<>(); 
 	private String inicioPeriodo, fimPeriodo;
 	private DateTime inicio, fim;
 	
@@ -35,6 +37,13 @@ public class DeploysBean {
 //	}
 	
 	public void pesquisarDeploys() {
+		if (inicioPeriodo.isEmpty() || fimPeriodo.isEmpty()) {
+			return;
+		}
+		if (!isDatasValidas()) {
+			return;
+		}
+
 		CrudService<Sistema> cs = new CrudServiceImpl<Sistema>(Sistema.class);
 		
 		Map<String, Object> parametros = new HashMap<>();
@@ -45,6 +54,9 @@ public class DeploysBean {
 		for (Sistema sistema : sistemas){
 			deploys.addAll(sistema.getDeploysOrdenadosPorData());
 		}
+		
+		criarListaDeploysDias();
+		carregarListaDeploysDias();
 	}
 	
 	public List<DeploysPorDia> criarListaDeploysDias() {
@@ -92,21 +104,29 @@ public class DeploysBean {
 	}
 	
 	
-	public void iniciarDatas() {
+	public boolean isDatasValidas() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		sdf.setLenient(false);
 		try {
 			Date inicio = sdf.parse(inicioPeriodo);
 			Date fim = sdf.parse(fimPeriodo);
 			
 			this.inicio = new DateTime(inicio);
 			this.fim = new DateTime(fim);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException | IllegalArgumentException e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Datas inválidas.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true); 
+			return false;
 		}
 
 		if (inicio.isAfter(fim)) {
-			throw new IllegalArgumentException("Data de início superior ao fim");
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Data de início superior ao fim.", null);
+			FacesContext.getCurrentInstance().addMessage(null, msg);	
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true); 
+			return false;
 		}
+		return true;
 	}
 	
 	public String getInicioPeriodo() {
@@ -126,12 +146,6 @@ public class DeploysBean {
 	}
 
 	public List<DeploysPorDia> getListaDeploysPorDia() {
-		inicioPeriodo = "01/09/2015";
-		fimPeriodo = "30/09/2015";
-		iniciarDatas();
-		pesquisarDeploys();
-		criarListaDeploysDias();
-		carregarListaDeploysDias();
 		return listaDeploysPorDia;
 	}
 }
