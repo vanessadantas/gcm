@@ -1,11 +1,5 @@
 package gcm.web;
 
-import gcm.aplicacao.CrudService;
-import gcm.dominio.Ambiente;
-import gcm.dominio.Deploy;
-import gcm.dominio.Sistema;
-import gcm.infra.CrudServiceImpl;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +12,12 @@ import javax.faces.bean.ManagedBean;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
+
+import gcm.aplicacao.CrudService;
+import gcm.dominio.Ambiente;
+import gcm.dominio.Deploy;
+import gcm.dominio.Sistema;
+import gcm.infra.CrudServiceImpl;
 
 @ManagedBean
 public class DeploysBean {

@@ -37,15 +37,27 @@
 							</h:outputText>
 						</div>
 						<div class="col-md-2">
-							<h:outputText value="#{deploy.versao}" rendered="#{deploy.ambiente == 'PRODUCAO'}" />
+							<h:outputLink value="releaseDetalhes.jsf">
+								<f:param name="idRelease" value="#{deploy.idRelease}"/>
+								<f:param name="id" value="#{sistemaBean.sistema.id}"/>
+								<h:outputText value="#{deploy.versao}" rendered="#{deploy.ambiente == 'PRODUCAO'}"/>
+							</h:outputLink>
 						</div>
 	
 						<div class="col-md-2">
-							<h:outputText value="#{deploy.versao}" rendered="#{deploy.ambiente == 'HOMOLOGACAO'}" />
+						<h:outputLink value="releaseDetalhes.jsf">
+								<f:param name="idRelease" value="#{deploy.idRelease}"/>
+								<f:param name="id" value="#{sistemaBean.sistema.id}"/>
+								<h:outputText value="#{deploy.versao}" rendered="#{deploy.ambiente == 'HOMOLOGACAO'}" />
+						</h:outputLink>
 						</div>
 							
 						<div class="col-md-2">
+						<h:outputLink value="releaseDetalhes.jsf">
+							<f:param name="idRelease" value="#{deploy.idRelease}"/>
+							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
 							<h:outputText value="#{deploy.versao}" rendered="#{deploy.ambiente == 'TESTE'}" />
+						</h:outputLink>
 						</div>
 					</div>
 				</ui:repeat>

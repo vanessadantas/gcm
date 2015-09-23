@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<div class="col-md-offset-1">
+			<h2>Detalhe da Release - #{releaseBean.release.numero}</h2>
+			
+				<h3>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome} </h3>
+				
+				<dl class="dl-horizontal">
+				
+					<dt> Data Criação </dt>
+					<dd>
+					 	<h:outputText value="#{releaseBean.release.dataCriacao}" >
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+						</h:outputText>
+					</dd>
+				</dl>
+
+				<dl class="dl-horizontal">
+					<dt>Testada</dt>
+					<dd>
+						<h:outputText/>
+					</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt>Homologada</dt>
+					<dd>
+					<h:outputText/>
+					</dd>
+				</dl>
+				
+				<dl class="dl-horizontal">
+					<dt>Notas</dt>
+					<dd>
+						<h:outputText/>
+					</dd>
+				</dl>
+				
+				<dl class="dl-horizontal">
+					<dt>Observações</dt>
+					<dd>
+						<h:outputText/>
+					</dd>
+				</dl>
+				
+				<dl class="dl-horizontal">
+					<dt>Deploy</dt>
+					<dd>
+						Produção:
+						<ui:repeat var="deploy" value="#{releaseBean.release.deploysProducao}">
+							<h:outputText value="#{deploy}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+							</h:outputText>
+						</ui:repeat>
+					</dd>
+					
+					<dd>
+						Homologação:
+						<ui:repeat var="deploy" value="#{releaseBean.release.deploysHomologacao}">
+							<h:outputText value="#{deploy}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+							</h:outputText>
+						</ui:repeat>
+					</dd>
+					<dd>
+						Teste:
+						<ui:repeat var="deploy" value="#{releaseBean.release.deploysTeste}">
+							<h:outputText value="#{deploy}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+							</h:outputText>
+						</ui:repeat>
+					</dd>
+				</dl>
+				<dl class="dl-horizontal">
+					<dt></dt>
+					<dd>
+						<h:link outcome="releaseCadastro.jsf" >
+							<f:param name="idRelease" value="#{releaseBean.release.id}"/>
+							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
+							<h:button value="Atualizar"/>
+						</h:link>
+					</dd>
+				</dl>				
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

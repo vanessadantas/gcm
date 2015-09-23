@@ -34,7 +34,7 @@ import javax.persistence.Transient;
 	@NamedQuery(name=Sistema.PESQUISAR_POR_SIGLA_EXATA, 
 		query="select s from Sistema s where upper(s.sigla) = :sigla"),
 	@NamedQuery(name=Sistema.PESQUISAR_DEPLOYS_POR_PERIODO, 
-		query="select distinct s from Sistema s inner join s.releases r " +
+		query="select s from Sistema s inner join s.releases r " +
 				"left join r.deploysProducao dp " +
 				"left join r.deploysHomologacao dh " +
 				"left join r.deploysTeste dt " +
@@ -86,13 +86,13 @@ public class Sistema {
 			deploys = new ArrayList<>();
 			for (Release release : releases) {
 				for (Date data : release.getDeploysProducao()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.PRODUCAO, data, getSigla()));
+					deploys.add(new Deploy(release.getNumero(), release.getId(), Ambiente.PRODUCAO, data, getSigla()));
 				}
 				for (Date data : release.getDeploysHomologacao()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.HOMOLOGACAO, data, getSigla()));
+					deploys.add(new Deploy(release.getNumero(), release.getId(), Ambiente.HOMOLOGACAO, data, getSigla()));
 				}
 				for (Date data : release.getDeploysTeste()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.TESTE, data, getSigla()));
+					deploys.add(new Deploy(release.getNumero(), release.getId(), Ambiente.TESTE, data, getSigla()));
 				}
 			}
 		}
