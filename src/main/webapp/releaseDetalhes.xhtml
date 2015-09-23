@@ -22,36 +22,20 @@
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 						</h:outputText>
 					</dd>
-				</dl>
 
-				<dl class="dl-horizontal">
-					<dt>Testada</dt>
+					<dt> Situação </dt>
 					<dd>
-						<h:outputText/>
+					 	<h:outputText value="#{releaseBean.release.situacao.descricao}" />
 					</dd>
-				</dl>
-				<dl class="dl-horizontal">
-					<dt>Homologada</dt>
-					<dd>
-					<h:outputText/>
-					</dd>
-				</dl>
-				
-				<dl class="dl-horizontal">
+
 					<dt>Notas</dt>
 					<dd>
 						<h:outputText/>
 					</dd>
-				</dl>
-				
-				<dl class="dl-horizontal">
 					<dt>Observações</dt>
 					<dd>
 						<h:outputText/>
 					</dd>
-				</dl>
-				
-				<dl class="dl-horizontal">
 					<dt>Deploy</dt>
 					<dd>
 						Produção:
@@ -82,10 +66,10 @@
 				<dl class="dl-horizontal">
 					<dt></dt>
 					<dd>
-						<h:link outcome="releaseCadastro.jsf" >
+						<h:link outcome="releaseCadastro.jsf" id="linkAtualizar" >
 							<f:param name="idRelease" value="#{releaseBean.release.id}"/>
 							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
-							<h:button value="Atualizar"/>
+							<h:button value="Atualizar" id="btnAtualizar" styleClass="btn btn-default"/>
 						</h:link>
 					</dd>
 				</dl>				
