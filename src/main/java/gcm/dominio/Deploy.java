@@ -9,12 +9,14 @@ import java.util.Date;
 public final class Deploy implements Comparable<Deploy> {
 	private Ambiente ambiente;
 	private String versao;
+	private Long idRelease;
 	private Date dataDeploy;
 	private String siglaSistema;
 	
-	public Deploy(String versao, Ambiente ambiente, Date dataDeploy, String siglaSistema) {
+	public Deploy(String versao, Long idRelease, Ambiente ambiente, Date dataDeploy, String siglaSistema) {
 		this.siglaSistema = siglaSistema;
 		this.versao = versao;
+		this.idRelease = idRelease;
 		this.ambiente = ambiente;
 		this.dataDeploy = dataDeploy;
 	}
@@ -47,6 +49,10 @@ public final class Deploy implements Comparable<Deploy> {
 
 	public String getSiglaSistema() {
 		return siglaSistema;
+	}
+
+	public Long getIdRelease() {
+		return idRelease;
 	}
 	
 }

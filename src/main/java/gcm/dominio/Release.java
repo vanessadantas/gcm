@@ -1,9 +1,9 @@
 package gcm.dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -32,15 +32,15 @@ public class Release {
 	@ElementCollection
 	@CollectionTable(name="DeploysProducao", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysProducao")
-	private Set<Date> deploysProducao = new HashSet<>();
+	private List<Date> deploysProducao = new ArrayList<>();
 	@ElementCollection
 	@CollectionTable(name="DeploysHomologacao", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysHomologacao")
-	private Set<Date> deploysHomologacao = new HashSet<>();
+	private List<Date> deploysHomologacao = new ArrayList<>();
 	@ElementCollection
 	@CollectionTable(name="DeploysTeste", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysTeste")
-	private Set<Date> deploysTeste = new HashSet<>();
+	private List<Date> deploysTeste = new ArrayList<>();
 
 	public void adicionarDeployProducao() {
 		this.deploysProducao.add(new Date());
@@ -103,13 +103,13 @@ public class Release {
 			Map<SituacaoTesteRelease, Date> historicoSituacaoTeste) {
 		this.historicoSituacaoTeste = historicoSituacaoTeste;
 	}
-	public Set<Date> getDeploysProducao() {
+	public List<Date> getDeploysProducao() {
 		return deploysProducao;
 	}
-	public Set<Date> getDeploysHomologacao() {
+	public List<Date> getDeploysHomologacao() {
 		return deploysHomologacao;
 	}
-	public Set<Date> getDeploysTeste() {
+	public List<Date> getDeploysTeste() {
 		return deploysTeste;
 	}
 }

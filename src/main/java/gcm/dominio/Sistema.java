@@ -86,13 +86,13 @@ public class Sistema {
 			deploys = new ArrayList<>();
 			for (Release release : releases) {
 				for (Date data : release.getDeploysProducao()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.PRODUCAO, data, getSigla()));
+					deploys.add(new Deploy(release.getNumero(), release.getId(), Ambiente.PRODUCAO, data, getSigla()));
 				}
 				for (Date data : release.getDeploysHomologacao()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.HOMOLOGACAO, data, getSigla()));
+					deploys.add(new Deploy(release.getNumero(), release.getId(), Ambiente.HOMOLOGACAO, data, getSigla()));
 				}
 				for (Date data : release.getDeploysTeste()) {
-					deploys.add(new Deploy(release.getNumero(), Ambiente.TESTE, data, getSigla()));
+					deploys.add(new Deploy(release.getNumero(), release.getId(), Ambiente.TESTE, data, getSigla()));
 				}
 			}
 		}

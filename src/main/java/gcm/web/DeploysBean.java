@@ -11,8 +11,6 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeField;
-import org.joda.time.DateTimeFieldType;
 
 import gcm.aplicacao.CrudService;
 import gcm.dominio.Deploy;
