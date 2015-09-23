@@ -9,11 +9,14 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Transient;
+import javax.persistence.MapKeyEnumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Release {
@@ -27,17 +30,32 @@ public class Release {
 	private boolean testada;
 	private boolean homologada;
 	private String observacao;
-	@Transient
-	private Map<SituacaoTesteRelease, Date> historicoSituacaoTeste;
+	
+	/**
+	 * Situação release
+	 * Em producao, testada e homologada
+	 * Em producao, com deploys em homologacao
+	 * Em producao, com deploy somente em homologacao
+	 * Em producao, com deploy somente em teste 
+	 */
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@MapKeyEnumerated(EnumType.STRING)
+	@CollectionTable(name="HistoricoSituacaoTeste", joinColumns=@JoinColumn(name="release_id"))
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="data")
+	private Map<SituacaoTeste, Date> historicoSituacaoTeste;
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="DeploysProducao", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysProducao")
 	private Set<Date> deploysProducao = new HashSet<>();
+	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="DeploysHomologacao", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysHomologacao")
 	private Set<Date> deploysHomologacao = new HashSet<>();
+	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="DeploysTeste", joinColumns=@JoinColumn(name="release_id"))
 	@Column(name="deploysTeste")
@@ -97,11 +115,11 @@ public class Release {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-	public Map<SituacaoTesteRelease, Date> getHistoricoSituacaoTeste() {
+	public Map<SituacaoTeste, Date> getHistoricoSituacaoTeste() {
 		return historicoSituacaoTeste;
 	}
 	public void setHistoricoSituacaoTeste(
-			Map<SituacaoTesteRelease, Date> historicoSituacaoTeste) {
+			Map<SituacaoTeste, Date> historicoSituacaoTeste) {
 		this.historicoSituacaoTeste = historicoSituacaoTeste;
 	}
 	public Set<Date> getDeploysProducao() {

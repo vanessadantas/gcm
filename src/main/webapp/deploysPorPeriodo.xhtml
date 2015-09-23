@@ -12,21 +12,21 @@
 		<ui:define name="conteudo">
 			<div class="col-md-offset-1">
 				<h3>Hist&oacute;rico de deploys</h3>
-				<h:form styleClass="form-inline">
+				<h:form styleClass="form-inline" prependId="false">
 
 					<label>Pequisar deploys por período</label>
 					<div class="row input-group">
 						<div class="col-xs-4">
-							<h:inputText id="inicioPeriodo" styleClass="form-control"
+							<h:inputText id="inicioPeriodo" styleClass="form-control" required="true" label="inicio"
 								value="#{deploysBean.inicioPeriodo}" a:placeholder="inicio"/>
 						</div>
 						<div class="col-xs-4">
-							<h:inputText id="fimPeriodo" styleClass="form-control"
+							<h:inputText id="fimPeriodo" styleClass="form-control" required="true" label="fim"
 								value="#{deploysBean.fimPeriodo}" a:placeholder="fim" />
 						</div>
 						<div class="input-group-btn col-xs-3">
 							<span class="input-group-btn">				
-								<h:commandLink styleClass="btn btn-default" >
+								<h:commandLink styleClass="btn btn-default" action="#{deploysBean.pesquisarDeploys}">
 								<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Pesquisar
 								</h:commandLink>
 							</span>
@@ -49,8 +49,7 @@
 					</div>
 				</div>
 				
-				
-				<ui:repeat var="deploysPorDia" value="#{deploysBean.listaDeploysPorDia}">
+				<ui:repeat var="deploysPorDia" value="#{deploysBean.listaDeploysPorDia}" varStatus="status">
 					<div class="container row">
 						<div class="col-md-2">
 							<h:outputText value="#{deploysPorDia.dia}" >
