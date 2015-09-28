@@ -66,10 +66,10 @@
 				<dl class="dl-horizontal">
 					<dt></dt>
 					<dd>
-						<h:link outcome="releaseCadastro.jsf" id="linkAtualizar" >
+						<h:link outcome="releaseCadastro.jsf" id="linkAtualizar" 
+							styleClass="btn btn-default" value="Atualizar">
 							<f:param name="idRelease" value="#{releaseBean.release.id}"/>
 							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
-							<h:button value="Atualizar" id="btnAtualizar" styleClass="btn btn-default"/>
 						</h:link>
 					</dd>
 				</dl>				
