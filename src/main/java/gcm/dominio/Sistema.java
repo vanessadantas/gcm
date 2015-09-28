@@ -70,12 +70,12 @@ public class Sistema {
 	private List<Release> releases = new ArrayList<>();
 	
 	@Transient
-	private List<Deploy> deploys;
-	@Transient
 	private Set<PontoIntegracao> dependencias;
-	@Transient
+	@OneToMany
 	private Set<PontoIntegracao> pontosIntegracao;
 	
+	@Transient
+	private List<Deploy> deploys;
 	
 	public void adicionarRelease(Release release) {
 		releases.add(release);

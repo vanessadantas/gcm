@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:gcm="http://java.sun.com/jsf/composite/componentes"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head></h:head>
+<h:body>
+	<h:form styleClass="form-horizontal" prependId="false" >
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">
+		    	<span class="glyphicon glyphicon-export" aria-hidden="true"></span>
+		    	Pontos de integração disponibilizados por esse sistema</h3>
+		  </div>
+		  <div class="panel-body">
+				<div class="form-group">
+					<label class="control-label col-xs-3">Tipo</label>
+					<div class="col-xs-6">
+						<h:selectOneMenu value="#{integracaoBean.tipoIntegracao}">
+							<f:selectItem itemLabel="-- Selecione o tipo de integração --" noSelectionOption="true"/>
+							<f:selectItems value="#{integracaoBean.tiposIntegracao}" var="tipoIntegracao" 
+								itemLabel="#{tipoIntegracao.descricao}" itemValue="#{tipoIntegracao}"/>
+							<f:ajax render="painelWebService painelArquivo painelBancoDados painelEndereco"/>
+						</h:selectOneMenu>
+					</div>
+				</div>
+
+				<h:panelGroup id="painelWebService">
+					<h:panelGroup rendered="#{integracaoBean.tipoIntegracao == 'WEB_SERVICE'}"> 
+						<div class="form-group">
+							<label class="control-label col-xs-3">Tipo de web service</label>
+							<div class="col-xs-6">
+								<h:selectOneRadio value="#{integracaoBean.wsRest}" layout="pageDirection">
+									<f:selectItem itemValue="#{true}" itemLabel="Rest"/>
+									<f:selectItem itemValue="#{false}" itemLabel="SOAP"/>
+								</h:selectOneRadio>
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup id="painelArquivo" >
+					<h:panelGroup rendered="#{integracaoBean.tipoIntegracao == 'ARQUIVO'}"> 
+						<div class="form-group">
+							<label class="control-label col-xs-3">Formato</label>
+							<div class="col-xs-6">			
+								<h:inputText styleClass="form-control"/>
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup id="painelBancoDados">
+					<h:panelGroup  rendered="#{integracaoBean.tipoIntegracao == 'BANCO_DE_DADOS'}"> 
+						<div class="form-group">
+							<label class="control-label col-xs-3">Schema</label>
+							<div class="col-xs-6">			
+								<h:inputText styleClass="form-control"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-xs-3">Tabelas</label>
+							<div class="col-xs-6">			
+								<h:inputText styleClass="form-control" a:placeholder="informe os nomes das tabelas separados por virgula"/>
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<h:panelGroup id="painelEndereco">
+					<h:panelGroup  rendered="#{integracaoBean.tipoIntegracao != 'BANCO_DE_DADOS'}">
+						<div class="form-group">
+							<label class="control-label col-xs-3">Endereço</label>
+							<div class="col-xs-6">
+								<h:inputText value="#{integracaoBean.endereco}"
+									styleClass="form-control" />
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-3">Observação</label>
+					<div class="col-xs-6">			
+						<h:inputTextarea value="#{integracaoBean.endereco}"
+							styleClass="form-control"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-xs-offset-3 col-xs-6">
+						<h:inputHidden value="#{sistemaBean.sistema.id}" />
+						<h:commandLink styleClass="btn btn-primary"
+							action="#{sistemaBean.salvar}">
+							<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+						</h:commandLink>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">
+		    	<span class="glyphicon glyphicon-import" aria-hidden="true"></span>
+		    	Dependências desse sistema
+		    </h3>
+		  </div>
+			<div class="panel-body">
+				<div class="form-group">
+					<label class="control-label col-xs-3">Sistema</label>
+					<div class="col-xs-6">
+						<h:selectOneMenu></h:selectOneMenu>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-xs-3">Ponto de integração</label>
+					<div class="col-xs-6">
+						<h:selectOneMenu></h:selectOneMenu>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-xs-offset-3 col-xs-6">
+						<h:inputHidden value="#{sistemaBean.sistema.id}" />
+						<h:commandLink styleClass="btn btn-primary"
+							action="#{sistemaBean.salvar}">
+							<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
+						</h:commandLink>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+	</h:form>
+</h:body>
+</html>

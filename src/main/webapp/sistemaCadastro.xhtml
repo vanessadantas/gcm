@@ -7,9 +7,9 @@
 	xmlns:gcm="http://java.sun.com/jsf/composite/componentes">
 
 <h:body>
-	<ui:composition template="/WEB-INF/comum/layout.xhtml">
-		<ui:define name="conteudo">
 			<h:form styleClass="form-horizontal" prependId="false" >
+			<h2 class="col-xs-offset-1">Cadastro - Sistema</h2>
+			
 				<div class="form-group">
 					<label class="control-label col-xs-2">Nome</label>
 					<div class="col-xs-6">
@@ -131,6 +131,8 @@
 						</h:dataTable>
 					</div>
 				</div>
+				
+				
 				<div class="form-group">
 					<div class="col-xs-offset-2 col-xs-6">
 						<h:inputHidden value="#{sistemaBean.sistema.id}" />
@@ -142,7 +144,5 @@
 				</div>
 				
 			</h:form>
-		</ui:define>
-	</ui:composition>
 </h:body>
 </html>
