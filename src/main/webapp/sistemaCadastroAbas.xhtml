@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:gcm="http://java.sun.com/jsf/composite/componentes">
+
+<h:body>
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<div class="col-xs-offset-1 col-xs-11">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#home"
+						aria-controls="home" role="tab" data-toggle="tab">Cadastro</a></li>
+					<li role="presentation"><a href="#profile"
+						aria-controls="profile" role="tab" data-toggle="tab">Integrações</a></li>
+				</ul>
+
+				<!-- Tab panes -->
+				<div class="tab-content col-xs-11">
+					<div role="tabpanel" class="tab-pane active" id="home" style="margin-top: 5px;">
+						<ui:include src="sistemaCadastro.xhtml" />
+					</div>
+					<div role="tabpanel" class="tab-pane" id="profile" style="margin-top: 5px;">
+						<ui:include src="sistemaCadastroIntegracoes.xhtml" />
+					</div>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
