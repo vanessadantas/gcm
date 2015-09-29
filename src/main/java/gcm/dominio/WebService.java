@@ -1,14 +1,11 @@
 package gcm.dominio;
 
-import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value="Web Service")
 public class WebService extends PontoIntegracao {
-	@Column(name="tipoIntegracao", insertable=false, updatable=false)
-	protected String tipoIntegracao;
 
 	private boolean rest;
 	private boolean publico;
@@ -24,8 +21,4 @@ public class WebService extends PontoIntegracao {
 	public void setPublico(boolean publico) {
 		this.publico = publico;
 	}
-	public String getTipoIntegracao() {
-		return tipoIntegracao;
-	}
-	
 }

@@ -1,5 +1,6 @@
 package gcm.dominio;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -16,6 +17,10 @@ public class PontoIntegracao {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@Column(name="tipoIntegracao", insertable=false, updatable=false)
+	protected String tipoIntegracao;
+	
 	private String endereco;
 	private String observacao;
 
@@ -36,6 +41,10 @@ public class PontoIntegracao {
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+	
+	public String getTipoIntegracao() {
+		return this.tipoIntegracao;
 	}
 	
 }

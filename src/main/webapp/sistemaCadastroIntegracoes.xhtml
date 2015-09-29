@@ -47,7 +47,7 @@
 						<div class="form-group">
 							<label class="control-label col-xs-3">Formato</label>
 							<div class="col-xs-6">			
-								<h:inputText styleClass="form-control"/>
+								<h:inputText value="#{integracaoBean.formato}" styleClass="form-control"/>
 							</div>
 						</div>
 					</h:panelGroup>
@@ -64,7 +64,8 @@
 						<div class="form-group">
 							<label class="control-label col-xs-3">Tabelas</label>
 							<div class="col-xs-6">			
-								<h:inputText styleClass="form-control" a:placeholder="informe os nomes das tabelas separados por virgula"/>
+								<h:inputText value="#{integracaoBean.tabelas}" styleClass="form-control" 
+									a:placeholder="informe os nomes das tabelas separados por virgula"/>
 							</div>
 						</div>
 					</h:panelGroup>
@@ -85,7 +86,7 @@
 				<div class="form-group">
 					<label class="control-label col-xs-3">Observação</label>
 					<div class="col-xs-6">			
-						<h:inputTextarea value="#{integracaoBean.endereco}"
+						<h:inputTextarea value="#{integracaoBean.observacao}"
 							styleClass="form-control"/>
 					</div>
 				</div>
@@ -94,11 +95,19 @@
 					<div class="col-xs-offset-3 col-xs-6">
 						<h:inputHidden value="#{sistemaBean.sistema.id}" />
 						<h:commandLink styleClass="btn btn-primary"
-							action="#{sistemaBean.salvar}">
+							action="#{integracaoBean.salvar}">
 							<span class="glyphicon glyphicon-save-file" aria-hidden="true"></span>salvar
 						</h:commandLink>
 					</div>
 				</div>
+			</div>
+			
+			<div>
+				<h:dataTable var="pontoIntegracao" value="#{integracaoBean.pontosIntegracao}" styleClass="table">
+					<h:column><h:outputText value="#{pontoIntegracao.tipoIntegracao}" /></h:column>
+					<h:column><h:outputText value="#{pontoIntegracao.endereco}" /></h:column>
+					<h:column><h:outputText value="#{pontoIntegracao.observacao}" /></h:column>
+				</h:dataTable>
 			</div>
 		</div>
 		

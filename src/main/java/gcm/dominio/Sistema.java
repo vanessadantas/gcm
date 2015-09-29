@@ -121,6 +121,13 @@ public class Sistema {
 		}
 		return null;
 	}
+	
+	public void adicionarPontoIntegracao(PontoIntegracao pi) {
+		if (pontosIntegracao == null) {
+			pontosIntegracao =  new HashSet<>();
+		}
+		pontosIntegracao.add(pi);
+	}
 
 	@Override
 	public String toString() {
