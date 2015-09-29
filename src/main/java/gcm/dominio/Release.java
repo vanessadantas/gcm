@@ -2,6 +2,7 @@ package gcm.dominio;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,13 @@ public class Release {
 
 	public void adicionarDeployTeste() {
 		this.deploysTeste.add(new Date());
+	}
+	
+	public void adicionarSituacaoTeste (SituacaoTeste situacaoTeste, Date data) {
+		if (historicoSituacaoTeste == null) {
+			historicoSituacaoTeste = new HashMap<>();
+		}
+		historicoSituacaoTeste.put(situacaoTeste, data);
 	}
 
 	public SituacaoRelease getSituacao() {
