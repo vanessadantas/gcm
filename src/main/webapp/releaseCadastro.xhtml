@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+
+	<ui:composition template="/WEB-INF/comum/layout.xhtml">
+		<ui:define name="conteudo">
+			<h:form styleClass="form-horizontal">
+			
+			<div class="col-xs-offset-1 col-xs-11">	
+				<h2>Cadastro da Release - #{releaseBean.release.numero}</h2>
+				<h3><h:outputText value="#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome}" /></h3>
+			</div>
+			
+			<div class="form-group">
+			  	<label class="control-label col-xs-2">Data Criação</label>
+				<div class="col-xs-6">	
+					 <h:outputText value="#{releaseBean.release.dataCriacao}" >
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+					 </h:outputText>
+				</div>
+			</div>
+				
+			<div class="form-group">
+			<label class="control-label col-xs-2">Situação</label>
+				<div class="col-xs-6">
+					 	<h:outputText value="#{releaseBean.release.situacao.descricao}" />
+				</div>
+			</div>
+				
+			<div class="form-group">
+				<label class="control-label col-xs-2">Notas</label>
+					<div class="col-xs-6">			
+						<h:inputTextarea value="#{releaseBean.release.notas}" styleClass="form-control" label="Notas">
+							<f:validateLength maximum="1024" />
+						</h:inputTextarea>
+					</div>
+			</div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Observação</label>
+						<div class="col-xs-6">			
+							<h:inputTextarea value="#{releaseBean.release.observacao}" styleClass="form-control" label="Observação">
+								<f:validateLength maximum="1024" />
+							</h:inputTextarea>
+					    </div>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Deploy Produção:</label>
+					<ui:repeat var="deploy" value="#{releaseBean.release.deploysProducao}">
+						<h:outputText value="#{deploy}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+						</h:outputText>
+					</ui:repeat>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Deploy Homologação:</label>
+					<ui:repeat var="deploy" value="#{releaseBean.release.deploysHomologacao}">
+						<h:outputText value="#{deploy}" styleClass="col-xs-9">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+						</h:outputText>
+					</ui:repeat>
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Deploy Teste:</label>
+					<ui:repeat var="deploy" value="#{releaseBean.release.deploysTeste}">
+					<h:outputText value="#{deploy}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+					</h:outputText>
+					</ui:repeat>
+				</div>
+					
+				<div class="col-xs-offset-2">	
+					<h:link outcome="releaseCadastro.jsf" id="linkAtualizar" >
+						<f:param name="idRelease" value="#{releaseBean.release.id}"/>
+						<f:param name="id" value="#{sistemaBean.sistema.id}"/>
+						<h:button value="Atualizar" id="btnAtualizar" styleClass="btn btn-default"/>
+					</h:link>
+			   </div>	
+			   			
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
