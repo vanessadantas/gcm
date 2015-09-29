@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:gcm="http://java.sun.com/jsf/composite/componentes"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head></h:head>
 <h:body>
 
@@ -31,6 +33,70 @@
 					 	<h:outputText value="#{releaseBean.release.situacao.descricao}" />
 				</div>
 			</div>
+			
+			<div class="form-group">
+					<label class="control-label col-xs-2">Situa&ccedil;&atilde;o do teste</label>
+					<div class="col-xs-2">
+						<h:selectOneMenu value="#{releaseBean.situacaoTeste}"
+							id="comboSituacaoTeste" label="Situa&ccedil;&atilde;o" required="true"
+							styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione situa&ccedil;&atilde;o --" />
+							<f:selectItems value="#{releaseBean.situacoesTeste}"
+								var="situacao" itemLabel="#{situacao.descricao}"
+								itemValue="#{situacao}" />
+						</h:selectOneMenu>
+					</div>
+					
+					<div class="col-xs-2">			
+						<h:inputText a:placeholder="__/__/____" value="#{releaseBean.dataSituacaoTeste}"
+							label="Nome" styleClass="form-control"/>
+					</div>
+					
+					<div class="col-xs-1">			
+						<h:inputText a:placeholder="__:__" value="#{releaseBean.horaSituacaoTeste}"
+							label="Nome" styleClass="form-control"/>
+					</div>
+					
+					<div class="col-xs-1" style="text-align:right">
+						<h:commandLink class="btn btn-default" aria-label="Left Align">
+							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+						</h:commandLink>
+					</div>
+					
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label col-xs-2">Situa&ccedil;&atilde;o da Homologação</label>
+					<div class="col-xs-2">
+						<h:selectOneMenu value="#{releaseBean.situacaoHomologacao}"
+							id="comboSituacaoHomologacao" label="Situa&ccedil;&atilde;o" required="true"
+							styleClass="form-control">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="-- Selecione situa&ccedil;&atilde;o --" />
+							<f:selectItems value="#{releaseBean.situacoesHomologacao}"
+								var="situacao" itemLabel="#{situacao.descricao}"
+								itemValue="#{situacao}" />
+						</h:selectOneMenu>
+					</div>
+					
+					<div class="col-xs-2">			
+						<h:inputText a:placeholder="__/__/____" value="#{releaseBean.dataSituacaoHomologacao}"
+							label="Nome" styleClass="form-control"/>
+					</div>
+					
+					<div class="col-xs-1">			
+						<h:inputText a:placeholder="__:__" value="#{releaseBean.horaSituacaoHomologacao}"
+							label="Nome" styleClass="form-control"/>
+					</div>
+					
+					<div class="col-xs-1" style="text-align:right">
+						<h:commandLink class="btn btn-default" aria-label="Left Align">
+							<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+						</h:commandLink>
+					</div>
+					
+				</div>
 				
 			<div class="form-group">
 				<label class="control-label col-xs-2">Notas</label>
