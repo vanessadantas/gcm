@@ -101,7 +101,7 @@
 			<div class="form-group">
 				<label class="control-label col-xs-2">Notas</label>
 					<div class="col-xs-6">			
-						<h:inputTextarea value="#{releaseBean.release.notas}" styleClass="form-control" label="Notas">
+						<h:inputTextarea value="#{releaseBean.release.notaAmbiente}" styleClass="form-control" label="Notas">
 							<f:validateLength maximum="1024" />
 						</h:inputTextarea>
 					</div>
@@ -110,7 +110,7 @@
 				<div class="form-group">
 					<label class="control-label col-xs-2">Observação</label>
 						<div class="col-xs-6">			
-							<h:inputTextarea value="#{releaseBean.release.observacao}" styleClass="form-control" label="Observação">
+							<h:inputTextarea value="#{releaseBean.release.notaBancoDados}" styleClass="form-control" label="Observação">
 								<f:validateLength maximum="1024" />
 							</h:inputTextarea>
 					    </div>

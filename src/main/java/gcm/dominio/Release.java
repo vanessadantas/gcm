@@ -27,10 +27,10 @@ public class Release {
 	private Long id;
 	private String numero;
 	private Date dataCriacao;
-	private String notas;
+	private String notaAmbiente;
 	private boolean testada;
 	private boolean homologada;
-	private String observacao;
+	private String notaBancoDados;
 	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@MapKeyEnumerated(EnumType.STRING)
@@ -119,11 +119,11 @@ public class Release {
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	public String getNotas() {
-		return notas;
+	public String getNotaAmbiente() {
+		return notaAmbiente;
 	}
-	public void setNotas(String notas) {
-		this.notas = notas;
+	public void setNotaAmbiente(String notas) {
+		this.notaAmbiente = notas;
 	}
 	public boolean isTestada() {
 		return testada;
@@ -147,11 +147,11 @@ public class Release {
 		}
 		this.homologada = homologada;
 	}
-	public String getObservacao() {
-		return observacao;
+	public String getNotaBancoDados() {
+		return notaBancoDados;
 	}
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+	public void setNotaBancoDados(String observacao) {
+		this.notaBancoDados = observacao;
 	}
 	public Map<SituacaoTeste, Date> getHistoricoSituacaoTeste() {
 		return historicoSituacaoTeste;

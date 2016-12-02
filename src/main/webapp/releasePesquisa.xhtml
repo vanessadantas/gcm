@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/comum/layout.xhtml">
+        <ui:define name="conteudo">
+            <h:form id="formPesquisa" prependId="false">
+                <div class="container row form-group">
+                    <label class="control-label col-xs-3">Pesquisar Release</label>
+
+                    <div class="input-group col-xs-9">
+                        <h:inputText id="pesquisarSistemaNome" styleClass="form-control"
+                                     value="#{sistemaBean.sistema.nome}" />
+
+                        <h:inputText id="pesquisarSistemVersao" styleClass="form-control"
+                                     value="#{releaseBean.release.numero}" />
+
+						<span class="input-group-btn">
+							<h:commandButton styleClass="btn btn-default" aria-label="Left Align"
+                                              action="#{releaseDetalhe.xhtml}" value="pesquisar">
+                            </h:commandButton>
+        				</span>
+                    </div>
+                </div>
+            </h:form>
+       </ui:define>
+    </ui:composition>
+</h:body>
+</html>
