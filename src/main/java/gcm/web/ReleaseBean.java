@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
@@ -25,12 +27,15 @@ public class ReleaseBean implements Serializable {
 	private Release release = new Release();
 	private CrudService<Release> crudService = new CrudServiceImpl<>(Release.class); 
 	private String dataSituacaoTeste;
-	private String  horaSituacaoTeste;
+	private String horaSituacaoTeste;
 	private String dataSituacaoHomologacao;
 	private String horaSituacaoHomologacao;
 	private SituacaoTeste situacaoTeste;
 	private SituacaoHomologacao situacaoHomologacao;
-	
+	private String pesquisaSistema;
+	private String pesquisaRelease;
+	private List<Release> releases;
+
 	public ReleaseBean() {
 		Map<String, String> parametros = FacesContext.getCurrentInstance().getExternalContext()
 				.getRequestParameterMap();
@@ -62,6 +67,7 @@ public class ReleaseBean implements Serializable {
 		}
 		release.adicionarSituacaoTeste(situacaoTeste, dataSituacao);
 	}
+
 	public SituacaoTeste[] getSituacoesTeste (){
 		return SituacaoTeste.values();
 	}
@@ -69,7 +75,13 @@ public class ReleaseBean implements Serializable {
 	public SituacaoHomologacao[] getSituacoesHomologacao (){
 		return SituacaoHomologacao.values();
 	}
-	
+
+	public void pesquisarReleases() {
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("numero", "%" + pesquisaRelease + "%");
+		releases = crudService.pesquisarPorNamedQuery(Release.PESQUISAR_POR_RELEASE_OU_SISTEMA, parametros);
+	}
+
 	public Release getRelease() {
 		return release;
 	}
@@ -125,5 +137,28 @@ public class ReleaseBean implements Serializable {
 	public void setSituacaoHomologacao(SituacaoHomologacao situacaoHomologacao) {
 		this.situacaoHomologacao = situacaoHomologacao;
 	}
-	
+
+	public String getPesquisaSistema() {
+		return pesquisaSistema;
+	}
+
+	public void setPesquisaSistema(String pesquisaSistema) {
+		this.pesquisaSistema = pesquisaSistema;
+	}
+
+	public String getPesquisaRelease() {
+		return pesquisaRelease;
+	}
+
+	public void setPesquisaRelease(String pesquisaRelease) {
+		this.pesquisaRelease = pesquisaRelease;
+	}
+
+	public List<Release> getReleases() {
+		return releases;
+	}
+
+	public void setReleases(List<Release> releases) {
+		this.releases = releases;
+	}
 }

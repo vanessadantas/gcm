@@ -6,20 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyEnumerated;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = Release.PESQUISAR_POR_RELEASE_OU_SISTEMA,
+				    query = "select r from Release r where r.numero like :numero ")
+})
 public class Release {
 
 	@Id
@@ -31,7 +24,8 @@ public class Release {
 	private boolean testada;
 	private boolean homologada;
 	private String notaBancoDados;
-	
+	public static final String PESQUISAR_POR_RELEASE_OU_SISTEMA = "release.pesquisarPorReleaseSistema";
+
 	@ElementCollection(fetch=FetchType.EAGER)
 	@MapKeyEnumerated(EnumType.STRING)
 	@CollectionTable(name="HistoricoSituacaoTeste", joinColumns=@JoinColumn(name="release_id"))

@@ -3,30 +3,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head></h:head>
 <h:body>
     <ui:composition template="/WEB-INF/comum/layout.xhtml">
         <ui:define name="conteudo">
-            <h:form id="formPesquisa" prependId="false">
-                <div class="container row form-group">
-                    <label class="control-label col-xs-3">Pesquisar Release</label>
-
-                    <div class="input-group col-xs-9">
-                        <h:inputText id="pesquisarSistemaNome" styleClass="form-control"
-                                     value="#{sistemaBean.sistema.nome}" />
-
-                        <h:inputText id="pesquisarSistemVersao" styleClass="form-control"
-                                     value="#{releaseBean.release.numero}" />
-
-						<span class="input-group-btn">
-							<h:commandButton styleClass="btn btn-default" aria-label="Left Align"
-                                              action="#{releaseDetalhe.xhtml}" value="pesquisar">
-                            </h:commandButton>
-        				</span>
-                    </div>
+            <h:form id="formPesquisa" prependId="false" class="form-inline">
+                <div class="form-group col-xs-3">
+                    <label class="control-label">Pesquisar Release</label>
                 </div>
+                <div class="form-group">
+                    <h:inputText id="pesquisarSistemaNome" styleClass="form-control"
+                                 value="#{releaseBean.pesquisaSistema}" a:placeholder="sistema"/>
+                </div>
+                <div class="form-group">
+                    <h:inputText id="pesquisarSistemVersao" styleClass="form-control"
+                                 value="#{releaseBean.pesquisaRelease}" a:placeholder="release"/>
+                </div>
+                <h:commandButton styleClass="btn btn-default" aria-label="Left Align"
+                                 action="#{releaseBean.pesquisarReleases()}" value="pesquisar">
+                </h:commandButton>
             </h:form>
+
+            <h:dataTable value="#{releaseBean.releases}" var="release" >
+                <h:column>
+                    #{release.numero}
+                </h:column>
+            </h:dataTable>
        </ui:define>
     </ui:composition>
 </h:body>
