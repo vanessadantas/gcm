@@ -40,13 +40,18 @@ import javax.persistence.Transient;
 				"left join r.deploysTeste dt " +
 				"where (dp between :inicio and :fim) or " +
 				"(dh between :inicio and :fim) or " +
-				"(dt between :inicio and :fim) ")
+				"(dt between :inicio and :fim) "),
+		@NamedQuery(name=Sistema.PESQUISAR_POR_RELEASE_E_SISTEMA,
+		query = "select s from Sistema s join fetch s.releases r " +
+				"where s.nome = :nome and r.numero = :numero")
 })
 public class Sistema {
 	
 	public static final String PESQUISAR_POR_NOME = "sistema.pesquisarPorNome";
 	public static final String PESQUISAR_POR_SIGLA_EXATA = "sistema.pesquisarPorSiglaExata";
 	public static final String PESQUISAR_DEPLOYS_POR_PERIODO = "sistema.pesquisarDeploysPorPeriodo";
+	public static final String PESQUISAR_POR_RELEASE_E_SISTEMA = "release.pesquisarPorReleaseSistema";
+
 	@Id
 	@GeneratedValue
 	private Long id;

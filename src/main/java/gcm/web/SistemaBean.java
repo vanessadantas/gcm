@@ -1,13 +1,7 @@
 package gcm.web;
 
 import gcm.aplicacao.CrudService;
-import gcm.dominio.Ambiente;
-import gcm.dominio.Arquitetura;
-import gcm.dominio.Deploy;
-import gcm.dominio.Linguagem;
-import gcm.dominio.Responsavel;
-import gcm.dominio.Sistema;
-import gcm.dominio.SituacaoSistema;
+import gcm.dominio.*;
 import gcm.infra.CrudServiceImpl;
 
 import java.io.Serializable;
@@ -35,6 +29,8 @@ public class SistemaBean implements Serializable {
 	private List<Responsavel> responsaveis;
 	private Responsavel responsavelSelecionado = new Responsavel();
 	private List<Responsavel> responsaveisSelecionados = new ArrayList<>();
+	private String pesquisaSistema;
+	private String pesquisaRelease;
 
 	private Sistema sistema = new Sistema();
 	public Arquitetura arquitetura = new Arquitetura();
@@ -67,6 +63,24 @@ public class SistemaBean implements Serializable {
 			arquiteturas = crudServiceArquitetura.pesquisarPorNamedQuery(Arquitetura.PESQUISAR_POR_LINGUAGEM,parametros);
 		}
 	}
+	public void pesquisarReleases() {
+		Map<String, Object> parametros = new HashMap<>();
+		parametros.put("numero",pesquisaRelease);
+		parametros.put("nome",pesquisaSistema);
+		sistemas = crudService.pesquisarPorNamedQuery(Sistema.PESQUISAR_POR_RELEASE_E_SISTEMA, parametros);
+        String mensagem = "";
+        if (sistemas.isEmpty()){
+            mensagem = "Não foi encontrada release com os dados informados";
+        } else if (sistemas.size()>1){
+            mensagem = "Existe mais de uma release com os dados informados";
+        } else {
+            sistema = sistemas.get(0);
+        }
+        FacesMessage msg = new FacesMessage(mensagem);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+	}
+
 
 	public void listarResponsaveis() {
 		responsaveis = crudServiceResponsavel.pesquisarPorNamedQuery(Responsavel.LISTAR_TODOS);
@@ -203,4 +217,21 @@ public class SistemaBean implements Serializable {
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
 	}
+
+	public String getPesquisaSistema() {
+		return pesquisaSistema;
+	}
+
+	public void setPesquisaSistema(String pesquisaSistema) {
+		this.pesquisaSistema = pesquisaSistema;
+	}
+
+	public String getPesquisaRelease() {
+		return pesquisaRelease;
+	}
+
+	public void setPesquisaRelease(String pesquisaRelease) {
+		this.pesquisaRelease = pesquisaRelease;
+	}
+
 }

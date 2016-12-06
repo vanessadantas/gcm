@@ -9,13 +9,7 @@ import java.util.Map;
 import javax.persistence.*;
 
 @Entity
-@NamedQueries({
-		@NamedQuery(name=Release.PESQUISAR_POR_RELEASE_E_SISTEMA,
-				    query = "select s from Sistema s join fetch Release r " +
-							"where s.nome = :nome and r.numero = :numero")
-})
 public class Release {
-   public static final String PESQUISAR_POR_RELEASE_E_SISTEMA = "release.pesquisarPorReleaseSistema";
 	@Id
 	@GeneratedValue
 	private Long id;
