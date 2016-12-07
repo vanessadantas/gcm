@@ -3,43 +3,55 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head></h:head>
 <h:body>
 
 	<ui:composition template="/WEB-INF/comum/layout.xhtml">
 		<ui:define name="conteudo">
+
+			<h:form id="formPesquisa" prependId="false" class="form-inline">
+				<div class="form-group col-xs-3">
+					<label class="control-label">Pesquisar Release</label>
+				</div>
+				<div class="form-group">
+					<h:inputText id="pesquisarSistemaNome" styleClass="form-control"
+								 value="#{sistemaBean.pesquisaSistema}" a:placeholder="sistema"/>
+				</div>
+				<div class="form-group">
+					<h:inputText id="pesquisarSistemVersao" styleClass="form-control"
+								 value="#{sistemaBean.pesquisaRelease}" a:placeholder="release"/>
+				</div>
+				<h:commandButton styleClass="btn btn-default" aria-label="Left Align"
+								 action="#{sistemaBean.pesquisarReleases()}" value="pesquisar">
+				</h:commandButton>
+			</h:form>
+
 			<div class="col-md-offset-1">
-			<h2>Detalhe da Release - #{releaseBean.release.numero}</h2>
-			
-				<h3>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome} </h3>
-				
+			<h2>#{sistemaBean.sistema.sigla} - #{sistemaBean.sistema.nome} - #{sistemaBean.release.numero} </h2>
+
 				<dl class="dl-horizontal">
 				
 					<dt> Data Criação </dt>
 					<dd>
-					 	<h:outputText value="#{releaseBean.release.dataCriacao}" >
+					 	<h:outputText value="#{sistemaBean.release.dataCriacao}" >
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 						</h:outputText>
 					</dd>
 
-					<dt> Situação </dt>
-					<dd>
-					 	<h:outputText value="#{releaseBean.release.situacao.descricao}" />
-					</dd>
-
-					<dt>Ambiente</dt>
+					<dt>Configurações de Ambiente: </dt>
 					<dd>
 						<h:outputText/>
 					</dd>
-					<dt>Banco de Dados</dt>
+					<dt>Configurações do Banco de Dados: </dt>
 					<dd>
 						<h:outputText/>
 					</dd>
 					<dt>Deploy</dt>
 					<dd>
 						Produção:
-						<ui:repeat var="deploy" value="#{releaseBean.release.deploysProducao}">
+						<ui:repeat var="deploy" value="#{sistemaBean.release.deploysProducao}">
 							<h:outputText value="#{deploy}">
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 							</h:outputText>
@@ -48,7 +60,7 @@
 					
 					<dd>
 						Homologação:
-						<ui:repeat var="deploy" value="#{releaseBean.release.deploysHomologacao}">
+						<ui:repeat var="deploy" value="#{sistemaBean.release.deploysHomologacao}">
 							<h:outputText value="#{deploy}">
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 							</h:outputText>
@@ -56,7 +68,7 @@
 					</dd>
 					<dd>
 						Teste:
-						<ui:repeat var="deploy" value="#{releaseBean.release.deploysTeste}">
+						<ui:repeat var="deploy" value="#{sistemaBean.release.deploysTeste}">
 							<h:outputText value="#{deploy}">
 								<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
 							</h:outputText>
@@ -68,7 +80,7 @@
 					<dd>
 						<h:link outcome="releaseCadastro.jsf" id="linkAtualizar" 
 							styleClass="btn btn-default" value="Atualizar">
-							<f:param name="idRelease" value="#{releaseBean.release.id}"/>
+							<f:param name="idRelease" value="#{sistemaBean.release.id}"/>
 							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
 						</h:link>
 					</dd>

@@ -31,6 +31,7 @@ public class SistemaBean implements Serializable {
 	private List<Responsavel> responsaveisSelecionados = new ArrayList<>();
 	private String pesquisaSistema;
 	private String pesquisaRelease;
+    private Release release = new Release();
 
 	private Sistema sistema = new Sistema();
 	public Arquitetura arquitetura = new Arquitetura();
@@ -63,22 +64,36 @@ public class SistemaBean implements Serializable {
 			arquiteturas = crudServiceArquitetura.pesquisarPorNamedQuery(Arquitetura.PESQUISAR_POR_LINGUAGEM,parametros);
 		}
 	}
-	public void pesquisarReleases() {
+
+    public Release getRelease() {
+        return release;
+    }
+
+    public void setRelease(Release release) {
+        this.release = release;
+    }
+
+    public void pesquisarReleases() {
 		Map<String, Object> parametros = new HashMap<>();
 		parametros.put("numero",pesquisaRelease);
 		parametros.put("nome",pesquisaSistema);
 		sistemas = crudService.pesquisarPorNamedQuery(Sistema.PESQUISAR_POR_RELEASE_E_SISTEMA, parametros);
         String mensagem = "";
+
         if (sistemas.isEmpty()){
+            FacesMessage msg = new FacesMessage(mensagem);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             mensagem = "Não foi encontrada release com os dados informados";
         } else if (sistemas.size()>1){
+            FacesMessage msg = new FacesMessage(mensagem);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             mensagem = "Existe mais de uma release com os dados informados";
         } else {
             sistema = sistemas.get(0);
+            release = sistema.getReleases().get(0);
         }
-        FacesMessage msg = new FacesMessage(mensagem);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 	}
 
 
