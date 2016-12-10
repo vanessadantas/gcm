@@ -72,10 +72,7 @@
       </SHUTDOWN>
     </ConfigurationWrapper>
     <method>
-      <option name="BuildArtifacts" enabled="true">
-        <artifact name="gcm:war" />
-        <artifact name="gcm:war exploded" />
-      </option>
+      <option name="BuildArtifacts" enabled="true" />
     </method>
   </configuration>
 </component>
