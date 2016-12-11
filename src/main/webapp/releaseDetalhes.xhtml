@@ -79,12 +79,23 @@
 					<dt></dt>
 					<dd>
 						<h:link outcome="releaseCadastro.jsf" id="linkAtualizar" 
-							styleClass="btn btn-default" value="Atualizar">
+							styleClass="btn btn-default" value="Atualizar Situação Teste">
 							<f:param name="idRelease" value="#{sistemaBean.release.id}"/>
 							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
 						</h:link>
 					</dd>
-				</dl>				
+				</dl>
+
+				<dl class="dl-horizontal">
+					<dt></dt>
+					<dd>
+						<h:link outcome="ambienteCadastroAtualizacaoAbas.jsf"
+								styleClass="btn btn-default" value="Cadastrar Atualizar Ambiente">
+							<f:param name="idRelease" value="#{sistemaBean.release.id}"/>
+							<f:param name="id" value="#{sistemaBean.sistema.id}"/>
+						</h:link>
+					</dd>
+				</dl>
 			</div>
 		</ui:define>
 	</ui:composition>
