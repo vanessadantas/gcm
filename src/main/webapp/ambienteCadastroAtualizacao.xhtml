@@ -5,7 +5,37 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:gcm="http://java.sun.com/jsf/composite/componentes">
-
 <h:body>
+
+    <h:form styleClass="form-horizontal" prependId="false" >
+    <div class="panel panel-default">
+
+        <h2 class="col-xs-offset-1">Cadastro - Atualização - Ambiente</h2>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2">Nome</label>
+            <div class="col-xs-6">
+                <h:inputText value="#{sistemaBean.sistema.nome}" label="Nome"
+                             styleClass="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2">Caminho</label>
+            <div class="col-xs-6">
+                <h:inputText value="" label="Caminho"
+                             styleClass="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-2">Descrição</label>
+            <div class="col-xs-6">
+                <h:inputTextarea value="" styleClass="form-control"/>
+            </div>
+        </div>
+
+    </div>
+    </h:form>
 </h:body>
 </html>
