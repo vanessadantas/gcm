@@ -1,11 +1,11 @@
 package gcm.dominio;
 
-public enum Configuracao {
+public enum FerramentaConfiguracao {
 	NOME_PROJETO("Nome do projeto"), LOCALIZACAO("Localização");
 	
 	public String nome;
 	
-	Configuracao(String nome){
+	FerramentaConfiguracao(String nome){
 		this.nome = nome;
 	}
 	

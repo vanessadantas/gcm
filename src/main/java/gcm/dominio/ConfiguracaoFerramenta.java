@@ -7,7 +7,7 @@ public class ConfiguracaoFerramenta {
 	private Sistema sistema;
 	private Ferramenta ferramenta;
 	private String observacao;
-	private Map<Configuracao, String> configuracao;
+	private Map<FerramentaConfiguracao, String> configuracao;
 	
 	public Long getId() {
 		return id;
@@ -33,10 +33,10 @@ public class ConfiguracaoFerramenta {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-	public Map<Configuracao, String> getConfiguracao() {
+	public Map<FerramentaConfiguracao, String> getConfiguracao() {
 		return configuracao;
 	}
-	public void setConfiguracao(Map<Configuracao, String> configuracao) {
+	public void setConfiguracao(Map<FerramentaConfiguracao, String> configuracao) {
 		this.configuracao = configuracao;
 	}
 }
